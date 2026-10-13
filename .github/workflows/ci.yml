@@ -73,6 +73,10 @@ jobs:
           pnpm typecheck
           pnpm lint
           pnpm format:check
+      - name: Build isolated browser test interface
+        env:
+          NEXT_PUBLIC_API_BASE_URL: http://127.0.0.1:8009
+        run: pnpm build
       - name: Install browser
         run: pnpm exec playwright install --with-deps chromium
       - name: Run UI and local integration tests
@@ -80,7 +84,8 @@ jobs:
           YIHE_LIVE_COMPLETION: "1"
           YIHE_LIVE_NOTES: "1"
           YIHE_LIVE_AGENT: "1"
-        run: pnpm test --workers=3
+          YIHE_TEST_STATIC: "1"
+        run: pnpm test
       - name: Rebuild without test endpoints
         run: pnpm build
       - name: Verify release package

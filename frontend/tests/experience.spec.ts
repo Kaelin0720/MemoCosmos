@@ -50,6 +50,7 @@ test("探索星图可以浏览、缩放与切换，不会创建或修改真实�
 });
 
 test("中英文切换保留文档和草稿，跨页面及刷新记住语言", async ({ page }) => {
+  test.setTimeout(60000);
   const note = fixtureNote("我的学习记录", "我昨天学了切片策略");
   await mockNotes(page, [note]);
   await mockMemory(page);

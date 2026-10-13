@@ -61,10 +61,11 @@ class MemoryArchive:
                     finally:
                         source.autocommit = previous
                         raw.close()
-                # 仅清理导出副本的空闲页；不让已经删除的正文残留在可迁移包中。
+                # 构建一份全新的紧凑数据库，避免原快照的空闲页带出已删除正文。
+                compact = Path(temporary) / "export.sqlite"
                 with sqlite3.connect(snapshot, autocommit=True) as target:
-                    target.execute("VACUUM")
-                files[".assistant/memory.sqlite"] = snapshot.read_bytes()
+                    target.execute("VACUUM INTO ?", (str(compact),))
+                files[".assistant/memory.sqlite"] = compact.read_bytes()
             if len(files) > 5000 or sum(len(data) for data in files.values()) > MAX_ARCHIVE:
                 raise ApiError(
                     413, "memory_export_large", "记忆包超过本次支持的100MiB或文件数量上限"

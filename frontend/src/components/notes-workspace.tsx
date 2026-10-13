@@ -151,6 +151,19 @@ export function NotesWorkspace() {
       if (current.mode === "browse" && current.selectedId) void notesStore.open(current.selectedId);
     }
   }, [selected, draftRoute]);
+  useEffect(() => {
+    // Browser history can move before Next updates useSearchParams. Read the
+    // restored URL immediately so a slower detail request cannot leave the
+    // previously selected document on screen after Back or Forward.
+    const restoreHistory = () => {
+      const query = new URLSearchParams(window.location.search);
+      const id = query.get("note");
+      if (isNoteId(id)) void notesStore.open(id);
+      else if (query.get("draft") === "1") notesStore.resume();
+    };
+    window.addEventListener("popstate", restoreHistory);
+    return () => window.removeEventListener("popstate", restoreHistory);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(

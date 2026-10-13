@@ -36,14 +36,15 @@ test("中文字节流、安全 Markdown、标题链接、快照完成与重复�
 });
 
 test("聊天流超过标签八秒超时仍可完成", async ({ page, chat }) => {
-  chat.state.delayMs = 9300;
+  test.setTimeout(45000);
+  chat.state.delayMs = 15000;
   await page.goto("/");
   await send(page);
   await expect(page.getByRole("button", { name: "停止生成" })).toBeVisible();
   await page.waitForTimeout(8300);
   await expect(page.getByRole("button", { name: "停止生成" })).toBeVisible();
   await expect(page.getByRole("button", { name: "发送消息", exact: true })).toBeVisible({
-    timeout: 5000,
+    timeout: 12000,
   });
   expect(chat.state.eventCalls).toBe(1);
   expect(chat.state.posts).toHaveLength(1);

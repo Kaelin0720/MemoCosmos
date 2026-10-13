@@ -5,7 +5,7 @@ const origin = `http://127.0.0.1:${port}`;
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
-  workers: 3,
+  workers: 2,
   forbidOnly: Boolean(process.env.CI),
   retries: 0,
   reporter: "list",
