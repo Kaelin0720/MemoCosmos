@@ -1,0 +1,2097 @@
+:root {
+  color-scheme: dark;
+  --text: #eeebf2;
+  --muted: #aba7b7;
+  --faint: #898493;
+  --accent: #88a7d2;
+  --line: #ddd5ee1a;
+}
+html {
+  background: #0b0b12;
+}
+.cosmic-universe {
+  color: var(--text);
+}
+.cosmic-universe
+  :is(
+    .chat-markdown,
+    .tag-name-cell strong,
+    .list-state h2,
+    .command-results a,
+    .setting-section-title,
+    .model-config-state,
+    .model-missing,
+    .note-tag-picker legend,
+    .note-body-heading > label
+  ) {
+  color: var(--text);
+}
+.cosmic-universe .chat-window .composer textarea {
+  color: var(--text);
+}
+.cosmic-universe
+  :is(
+    .field label span,
+    .field [readonly],
+    .command-results small,
+    .command-empty,
+    .collection-heading p:not(.eyebrow),
+    .tag-search,
+    .collection-meta,
+    .list-state p,
+    .tag-table th,
+    .tag-name-cell p,
+    .collection-footnote,
+    .small-muted,
+    .setting-row p,
+    .empty-reply,
+    .message-status,
+    .image-placeholder,
+    .context-note,
+    .stream-note,
+    .composer-hint,
+    .history-title small,
+    .chat-history .history-info,
+    .model-explanation,
+    .model-config-state span
+  ) {
+  color: var(--muted);
+}
+.cosmic-universe .chat-window .composer textarea[readonly] {
+  color: var(--muted);
+}
+.cosmic-universe :is(.unavailable-link, .chat-notice a, .model-missing a, .collection-footnote a) {
+  color: #bab1e1;
+  text-decoration-color: #9a8cd1;
+}
+.cosmic-universe :is(.stop-button, .jump-button) {
+  color: #bab1e1;
+  background: #4b485250;
+  border-color: #9e94c638;
+}
+.cosmic-universe :is(.chat-notice, .notes-read-error, .delete-symbol, .error-state > svg) {
+  color: #ff99a5;
+}
+.cosmic-universe :is(.message-status.failed, .message-status.interrupted),
+.cosmic-universe :is(.memory-job.failed, .memory-job.interrupted) .memory-job-title strong {
+  color: #ff99a5;
+}
+.cosmic-universe .memory-job.completed .memory-job-title strong {
+  color: #77dbc1;
+}
+.cosmic-universe .memory-job.needs_confirmation .memory-job-title strong,
+.cosmic-universe .note-sync.pending {
+  color: #f3c580;
+}
+.cosmic-universe input[type="checkbox"] {
+  accent-color: #9484d1;
+}
+.cosmic-universe .skip-link {
+  background: #9484d1;
+  color: #ffffff;
+}
+.cosmic-universe .nebula-image {
+  opacity: 0.55;
+  filter: saturate(0.6) brightness(0.82);
+  mix-blend-mode: screen;
+  background-position: 58% 40%;
+  animation-duration: 100s;
+}
+.cosmic-universe .nebula-wash {
+  background:
+    radial-gradient(ellipse at 68% 12%, #34304510, transparent 60%),
+    linear-gradient(180deg, #0b0b123b, #0b0b1299 55%, #0b0b12d1);
+}
+.cosmic-universe .stars-layer i {
+  background: #eee6f5;
+  box-shadow: 0 0 5px #d8cce555;
+  animation-duration: 30s;
+}
+.cosmic-universe .cosmic-lines {
+  stroke: #d6c9e3;
+  opacity: 0.07;
+  stroke-width: 0.55;
+}
+.cosmic-universe .brand-mark {
+  color: #9484d1;
+  filter: drop-shadow(0 0 12px #a294d755);
+}
+.cosmic-universe :is(.glass-panel, .dialog-content, .command-dialog, .space-menu, .toast) {
+  color: var(--text);
+  background: #1a191df5;
+  border-color: var(--line);
+  box-shadow:
+    0 18px 70px #00000055,
+    0 2px 8px #00000030;
+  backdrop-filter: blur(24px);
+}
+.cosmic-universe .glass-panel {
+  background: linear-gradient(130deg, #1a191ceb, #151417f2);
+}
+.cosmic-universe
+  :is(
+    .command-trigger,
+    .space-trigger,
+    .new-conversation,
+    .welcome-action,
+    .secondary-button,
+    .stage-badge,
+    .tool-chip,
+    .chat-start
+  ) {
+  background: #262529aa;
+  border-color: var(--line);
+  color: var(--text);
+}
+.cosmic-universe
+  :is(
+    .command-trigger,
+    .space-trigger,
+    .secondary-button,
+    .quiet-button,
+    .icon-button,
+    .welcome-action
+  ):hover:not(:disabled) {
+  background: #39373e;
+  border-color: #8190ad50;
+  color: #cfc9ea;
+}
+.cosmic-universe :is(.primary-button, .send-button, .toggle[aria-checked="true"]) {
+  color: #ffffff;
+  background: #9484d1;
+  border-color: #9484d1;
+  box-shadow: 0 5px 16px #6181be2e;
+}
+.cosmic-universe .primary-button:hover:not(:disabled),
+.cosmic-universe .send-button:hover:not(:disabled) {
+  background: #b9afe0;
+  box-shadow: 0 8px 24px #6181be48;
+}
+.cosmic-universe .avatar {
+  background: #2d2b31;
+  color: #b9afe0;
+  border-color: #a29ac538;
+}
+.cosmic-universe
+  :is(
+    .eyebrow,
+    .tiny-star,
+    .heading-star,
+    .tag-star,
+    .stage-note > svg,
+    .setting-section-title > svg
+  ) {
+  color: #9484d1;
+}
+.cosmic-universe
+  :is(
+    .welcome-description,
+    .welcome-hint,
+    .stage-note,
+    .constellation-caption p,
+    .constellation-caption .eyebrow,
+    .dialog-description,
+    .field label,
+    .field-help,
+    .page-description,
+    .notes-hint,
+    .app-footer,
+    .connection-badge,
+    .menu-label,
+    .history-menu p,
+    .command-search input,
+    .space-menu a,
+    .space-menu [role="menuitem"],
+    .origin-badge,
+    .tag-table time,
+    .note-source p,
+    .note-reader-foot
+  ) {
+  color: var(--muted);
+}
+.cosmic-universe
+  :is(
+    .welcome h2,
+    .collection-heading h1,
+    .settings-page h1,
+    .notes-heading h1,
+    .note-reader h2,
+    .dialog-title,
+    .field label,
+    .note-entry,
+    .graph-details h3
+  ) {
+  color: var(--text);
+}
+.cosmic-universe
+  :is(
+    .welcome-mark,
+    .empty-symbol,
+    .origin-badge,
+    .tag-star,
+    .note-tags span,
+    .note-tags a,
+    .chat-avatar,
+    .note-sync,
+    .stage-badge,
+    .graph-evidence
+  ) {
+  background: #38363d65;
+  color: #b9afe0;
+  border-color: #938bb230;
+}
+.cosmic-universe .welcome-mark {
+  background: radial-gradient(circle at 45% 35%, #47444e, #212024);
+  border-color: #9d93c240;
+}
+.cosmic-universe .welcome-action {
+  box-shadow: 0 2px 10px #6181be12;
+}
+.cosmic-universe .composer {
+  background: #201f22;
+  border-color: #978fb630;
+  box-shadow: 0 3px 14px #00000020;
+}
+.cosmic-universe :is(input, textarea, select) {
+  color: var(--text);
+  background-color: #201f22;
+  border-color: #9b95b538;
+}
+.cosmic-universe :is(input, textarea)::placeholder {
+  color: #8b919d;
+}
+.cosmic-universe .composer textarea {
+  background: transparent;
+  color: var(--text);
+}
+.cosmic-universe
+  :is(
+    .field input,
+    .field textarea,
+    .note-filters input,
+    .note-filters select,
+    .memory-search-input input
+  ):focus {
+  border-color: #ab9fda;
+  box-shadow: 0 0 0 3px #9484d126;
+}
+.cosmic-universe .constellation-links {
+  stroke: #a99cda;
+}
+.cosmic-universe .constellation-links .light-flow {
+  stroke: #9484d1;
+}
+.cosmic-universe .star-halos {
+  fill: #bdb4e2;
+  opacity: 0.48;
+}
+.cosmic-universe :is(.star-cores, .constellation-spark) {
+  fill: #9484d1;
+}
+.cosmic-universe
+  :is(
+    .constellation-caption a,
+    .notes-tag-link,
+    .chat-markdown a,
+    .graph-evidence a,
+    .note-relations a,
+    .text-button
+  ) {
+  color: #bab1e1;
+}
+.cosmic-universe .dialog-overlay {
+  background: #070608c7;
+  backdrop-filter: blur(5px);
+}
+.cosmic-universe
+  :is(
+    .menu-separator,
+    .window-bar,
+    .setting-section,
+    .collection-footnote,
+    .collection-heading,
+    .collection-toolbar,
+    .tag-table th,
+    .tag-table td,
+    .notes-heading,
+    .notes-directory,
+    .note-dates,
+    .note-source,
+    .note-body-heading,
+    .note-save-bar,
+    .note-form-heading,
+    .knowledge-tabs,
+    .graph-details
+  ) {
+  border-color: var(--line);
+}
+.cosmic-universe
+  :is(
+    .space-menu .active,
+    .space-menu [data-highlighted],
+    .command-results a:hover,
+    .tag-table tbody tr:hover,
+    .note-entry.selected,
+    .note-entry:hover,
+    .folder-select[aria-pressed="true"],
+    .graph-relation[aria-pressed="true"],
+    .version-list button[aria-pressed="true"]
+  ) {
+  background: #4d4a5466;
+  color: #bab1e1;
+  border-color: #a69bd34a;
+}
+.cosmic-universe
+  :is(
+    .list-state,
+    .note-form,
+    .note-reader,
+    .note-preview,
+    .note-retained,
+    .memory-job,
+    .memory-restored,
+    .graph-layout,
+    .note-comparison section,
+    .reconcile-layout section,
+    .memory-hit,
+    .markdown-table-wrap,
+    .chat-markdown pre
+  ) {
+  background: #18171b;
+  border-color: var(--line);
+}
+.cosmic-universe
+  :is(
+    .note-notice.success,
+    .chat-message.user .message-content,
+    .user .message-bubble,
+    .local-message,
+    .chat-empty,
+    .chat-status,
+    .memory-selected-file
+  ) {
+  background: #3a383e70;
+  border-color: #9b91c233;
+  color: var(--text);
+}
+.cosmic-universe :is(.chat-markdown code, .chat-markdown th, .chat-markdown blockquote) {
+  color: var(--text);
+  background: #28262b;
+  border-color: #9e94c638;
+}
+.cosmic-universe .chat-markdown pre code {
+  background: transparent;
+}
+.cosmic-universe
+  :is(
+    .inline-error,
+    .danger-item,
+    .danger-button,
+    .note-notice.error,
+    .note-notice.uncertain,
+    .note-sync.conflict,
+    .note-sync-error,
+    .notes-inline-error,
+    .error-text
+  ) {
+  color: #ff99a5;
+}
+.cosmic-universe :is(.danger-button, .note-notice.error, .note-notice.uncertain, .delete-symbol) {
+  background: #4e223145;
+  border-color: #c45d7040;
+}
+.cosmic-universe .danger-button:hover {
+  background: #66304355;
+}
+.cosmic-universe .online .connection-dot {
+  background: #77dbc1;
+}
+.cosmic-universe :is(.offline, .error) .connection-dot {
+  background: #fb8395;
+}
+.cosmic-universe .toggle {
+  background: #363539;
+  border-color: #5d647240;
+}
+.cosmic-universe .toggle span {
+  background: #ffffff;
+  box-shadow: 0 1px 4px #00000050;
+}
+.cosmic-universe :is(.graph-edge, .graph-node text) {
+  stroke: #aca0db55;
+}
+.cosmic-universe .graph-edge.selected {
+  stroke: #9484d1;
+}
+.cosmic-universe .graph-node text {
+  fill: var(--text);
+  stroke: none;
+}
+.cosmic-universe .graph-layout {
+  background: radial-gradient(ellipse at 40% 60%, #3d3a4377, transparent 70%), #18171b;
+}
+.cosmic-universe .graph-details {
+  background: #1b1a1de8;
+}
+.cosmic-universe .graph-relation {
+  background: #201f22;
+  color: var(--text);
+  border-color: var(--line);
+}
+.cosmic-universe :focus-visible {
+  outline-color: #9484d1;
+}
+.cosmic-universe ::selection {
+  background: #5f76a288;
+  color: #f4f2fa;
+}
+.cosmic-universe .knowledge-tabs button {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  border-color: transparent;
+  color: var(--muted);
+}
+.cosmic-universe .knowledge-tabs button[aria-pressed="true"] {
+  background: transparent;
+  color: #bab1e1;
+  border-color: transparent;
+}
+.active-tab-surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 1px solid #a69bd34a;
+  background: #4d4a5466;
+  border-radius: 11px;
+}
+.cosmic-universe .folder-branch {
+  margin-left: 14px;
+  padding-left: 8px;
+  border-left: 1px solid #848d9e24;
+}
+.cosmic-universe .folder-tree > .folder-branch {
+  margin-left: 0;
+  padding-left: 0;
+  border-left: 0;
+}
+.cosmic-universe .folder-tree {
+  max-height: min(560px, 60dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #69718070 transparent;
+}
+.cosmic-universe .folder-note.note-entry {
+  padding: 6px 9px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  margin: 2px 0;
+  width: 100%;
+  min-width: 0;
+}
+.cosmic-universe .folder-note.note-entry > span {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cosmic-universe .folder-note.note-entry small {
+  width: 100%;
+  padding-left: 20px;
+  font-size: 10px;
+  color: #ff99a5;
+}
+.cosmic-universe .folder-select {
+  font-size: 10px;
+  padding: 2px 8px;
+  color: var(--muted);
+}
+.folder-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.folder-heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  padding: 7px 3px;
+  text-align: left;
+  font-size: 13px;
+  border: 0;
+  background: transparent;
+}
+.folder-heading > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.folder-heading > svg,
+.folder-chevron {
+  flex-shrink: 0;
+}
+.folder-chevron {
+  display: inline-flex;
+}
+.folder-filter {
+  opacity: 0.35;
+}
+.folder-row:hover .folder-filter,
+.folder-row:focus-within .folder-filter,
+.folder-filter[aria-pressed="true"] {
+  opacity: 1;
+}
+.folder-children {
+  overflow: hidden;
+}
+.note-breadcrumb {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 8px 0 20px;
+}
+.note-relations {
+  margin: 18px 0;
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+}
+.note-relations h3 {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  font-family: inherit;
+}
+.note-relations ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.note-relations li {
+  display: flex;
+  gap: 7px;
+  align-items: baseline;
+}
+.note-relations small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.cosmic-universe .notes-directory {
+  background: #161618b0;
+  padding: 20px 16px;
+}
+.cosmic-universe .notes-content {
+  grid-template-columns: 290px minmax(0, 1fr);
+  transition: grid-template-columns 0.28s cubic-bezier(0.22, 0.72, 0.18, 1);
+}
+.cosmic-universe .notes-content.directory-collapsed {
+  grid-template-columns: 0px minmax(0, 1fr);
+}
+.cosmic-universe .notes-content.directory-collapsed > .notes-directory {
+  width: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.cosmic-universe .notes-directory {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transition: padding 0.28s cubic-bezier(0.22, 0.72, 0.18, 1);
+}
+.cosmic-universe :is(button, a, input, textarea, select) {
+  transition:
+    color 0.16s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+.cosmic-universe :is(button, a):not([data-motion-button="true"]) {
+  transition:
+    color 0.16s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    scale 0.18s ease;
+}
+.cosmic-universe :is(button, a):not([data-motion-button="true"]):not(:disabled):hover {
+  scale: 1.015;
+}
+.cosmic-universe :is(button, a):not([data-motion-button="true"]):not(:disabled):active {
+  scale: 0.98;
+}
+.cosmic-universe [data-state="open"]:is(.space-menu, .command-dialog, .delete-dialog) {
+  animation: surface-arrive 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.cosmic-universe [data-state="closed"]:is(.space-menu, .command-dialog, .delete-dialog) {
+  animation: surface-leave 0.15s ease both;
+}
+@keyframes surface-arrive {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+    scale: 0.98;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+@keyframes surface-leave {
+  to {
+    opacity: 0;
+    translate: 0 4px;
+    scale: 0.98;
+  }
+}
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-group(.space-morph) {
+  animation-duration: 0.38s;
+  animation-timing-function: cubic-bezier(0.22, 0.72, 0.18, 1);
+}
+::view-transition-old(.space-exit) {
+  animation: surface-leave 0.15s ease both;
+}
+::view-transition-new(.space-enter) {
+  animation: surface-arrive 0.28s ease both;
+}
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html[data-motion="reduced"] :is(button, a) {
+  scale: none !important;
+}
+html[data-motion="reduced"]::view-transition-group(*),
+html[data-motion="reduced"]::view-transition-old(*),
+html[data-motion="reduced"]::view-transition-new(*) {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(button, a) {
+    scale: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+@media (max-width: 850px) {
+  .cosmic-universe .notes-content,
+  .cosmic-universe .notes-content.directory-collapsed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cosmic-universe .notes-content.directory-collapsed > .notes-directory {
+    width: auto;
+  }
+  .cosmic-universe .folder-tree {
+    max-height: 280px;
+  }
+  .cosmic-universe .notes-directory {
+    border-right: 0;
+  }
+}
+
+/* Product shell: compact navigation, calm reading surfaces and a visible sky. */
+:root {
+  --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --serif: var(--sans);
+}
+body.cosmic-universe {
+  background: transparent;
+}
+.cosmic-universe .app-header {
+  height: 86px;
+  margin: 0 3%;
+  gap: 20px;
+}
+.cosmic-universe .brand {
+  width: auto;
+  min-width: 150px;
+  gap: 11px;
+}
+.cosmic-universe .brand strong {
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+}
+.cosmic-universe .brand small {
+  letter-spacing: 0.1em;
+  font-size: 10px;
+}
+.primary-navigation {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: auto;
+}
+.primary-navigation a {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 13px;
+  border-radius: 9px;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.primary-navigation a[aria-current="page"] {
+  color: #dbd6ef;
+}
+.nav-active-surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: #45424b55;
+  border: 1px solid #b1a8d726;
+}
+.cosmic-universe .command-trigger {
+  width: 190px;
+  background: #26242990;
+}
+.cosmic-universe .header-actions {
+  gap: 10px;
+}
+.cosmic-universe .space-trigger {
+  padding: 8px 12px;
+  gap: 8px;
+  border-radius: 11px;
+}
+.language-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 11px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #26242990;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.language-menu {
+  min-width: 170px;
+}
+.language-menu [role="menuitem"] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px;
+}
+.cosmic-universe .glass-panel {
+  box-shadow:
+    0 24px 80px #0000003b,
+    inset 0 1px #e7e3f506;
+}
+.cosmic-universe .notes-heading {
+  padding: 28px 30px 23px;
+}
+.cosmic-universe .notes-heading h1 {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  margin: 7px 0 9px;
+}
+.cosmic-universe .notes-heading p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 12px;
+}
+.cosmic-universe .knowledge-tabs {
+  padding: 10px 30px;
+  gap: 6px;
+  background: #0f0e1040;
+}
+.cosmic-universe .notes-document {
+  padding: 26px;
+}
+.cosmic-universe .notes-welcome {
+  position: relative;
+  overflow: hidden;
+  padding: 48px 28px;
+  min-height: 480px;
+  border: 1px solid #9c95b818;
+  border-radius: 16px;
+  background: radial-gradient(ellipse at 50% 5%, #42404850, transparent 65%);
+}
+.cosmic-universe .notes-welcome h2 {
+  font-size: 26px;
+  letter-spacing: -0.03em;
+  max-width: 540px;
+}
+.cosmic-universe .notes-welcome > p:not(.eyebrow) {
+  max-width: 450px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.welcome-constellation {
+  width: 240px;
+  height: 115px;
+  margin: 0 auto 23px;
+  overflow: visible;
+  color: #b0a5dd;
+}
+.welcome-constellation circle {
+  fill: #ded9f1;
+  filter: drop-shadow(0 0 6px #a497d7);
+}
+.welcome-constellation path {
+  fill: none;
+  stroke: #a69dcd60;
+  stroke-width: 1;
+}
+.welcome-constellation .pulse-star {
+  animation: memory-star-pulse 4s ease-in-out infinite alternate;
+}
+@keyframes memory-star-pulse {
+  to {
+    opacity: 0.45;
+  }
+}
+.notes-welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 23px;
+}
+.welcome-capabilities {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 32px;
+  color: var(--faint);
+  font-size: 11px;
+}
+.welcome-capabilities span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.cosmic-universe .memory-graph {
+  padding: 25px 30px;
+}
+.graph-mode-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 18px 0 0;
+}
+.graph-mode-switch {
+  display: flex;
+  gap: 3px;
+  padding: 4px;
+  background: #0d0c0f55;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.graph-mode-switch button {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 8px 13px;
+}
+.graph-mode-switch button[aria-pressed="true"] {
+  color: #dbd6f0;
+}
+.graph-mode-switch .active-tab-surface {
+  border-radius: 9px;
+}
+.graph-mode-note {
+  font-size: 11px;
+  color: var(--muted);
+}
+.graph-empty-state {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #2b292e50;
+}
+.graph-empty-state > svg {
+  color: #b2a7de;
+  flex-shrink: 0;
+}
+.graph-empty-state strong {
+  font-size: 13px;
+  font-weight: 500;
+}
+.graph-empty-state p {
+  color: var(--muted);
+  font-size: 11px;
+  margin: 7px 0 0;
+}
+.graph-empty-state button {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.cosmic-universe .graph-layout {
+  grid-template-columns: minmax(0, 1fr) 280px;
+  background: radial-gradient(ellipse at 42% 40%, #3d3a433b, transparent 70%), #121114ee;
+  border-color: #a59cc626;
+}
+.cosmic-universe .graph-layout > svg {
+  background: transparent;
+  min-height: 480px;
+}
+.graph-starfield {
+  color: #c8c0e7;
+}
+.graph-starfield ellipse {
+  opacity: 0.055;
+  stroke-dasharray: 3 8;
+}
+.cosmic-universe .graph-node text {
+  fill: #c7c3d7;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+.cosmic-universe .graph-node.selected text {
+  fill: #f4f3fa;
+  font-weight: 600;
+}
+.cosmic-universe .graph-node > circle {
+  transition: r 0.25s ease;
+}
+.cosmic-universe .graph-edge {
+  stroke: #7c8dad40;
+}
+.cosmic-universe .graph-edge.selected {
+  stroke: #b5aadfaa;
+  stroke-width: 1.4;
+}
+.cosmic-universe .graph-details {
+  background: #1c1b1ed6;
+  padding: 22px;
+}
+.cosmic-universe .graph-details h3 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin: 12px 0 8px;
+}
+.graph-topic-description {
+  color: var(--muted);
+  line-height: 1.9;
+  margin: 16px 0;
+}
+.cosmic-universe .graph-relation {
+  background: #28272b80;
+  font-size: 11px;
+  padding: 10px 12px;
+}
+.cosmic-universe .graph-evidence {
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+.graph-evidence p {
+  line-height: 1.8;
+}
+.graph-canvas-hint {
+  margin: 13px 0 0;
+  color: var(--faint);
+  font-size: 10px;
+  text-align: center;
+}
+.preview-topic > p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.9;
+  margin: 22px 0;
+}
+.preview-topic h3 {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+.preview-connections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cosmic-universe .app-footer {
+  padding-top: 20px;
+}
+@media (max-width: 1150px) {
+  .cosmic-universe .command-trigger {
+    width: 42px;
+    justify-content: center;
+    padding: 0;
+  }
+  .command-trigger span,
+  .command-trigger kbd {
+    display: none;
+  }
+}
+@media (max-width: 930px) {
+  .primary-navigation {
+    display: none;
+  }
+  .cosmic-universe .brand {
+    margin-right: auto;
+  }
+}
+@media (max-width: 850px) {
+  .cosmic-universe .notes-heading {
+    padding: 23px 20px;
+  }
+  .cosmic-universe .knowledge-tabs {
+    padding: 10px 16px;
+  }
+  .cosmic-universe .notes-document {
+    padding: 18px;
+  }
+  .cosmic-universe .notes-welcome {
+    padding: 36px 20px;
+    min-height: 400px;
+  }
+  .cosmic-universe .notes-welcome h2 {
+    font-size: 23px;
+  }
+  .cosmic-universe .graph-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cosmic-universe .graph-layout > svg {
+    min-height: 300px;
+  }
+  .cosmic-universe .graph-node text {
+    font-size: 16px;
+  }
+  .cosmic-universe .graph-details {
+    max-height: none;
+  }
+  .cosmic-universe .memory-graph {
+    padding: 20px 16px;
+  }
+}
+@media (max-width: 550px) {
+  .cosmic-universe .app-header {
+    height: 76px;
+    gap: 10px;
+    margin: 0 5%;
+  }
+  .cosmic-universe .brand {
+    min-width: 0;
+    gap: 8px;
+  }
+  .cosmic-universe .brand-mark {
+    width: 29px;
+    height: 29px;
+  }
+  .cosmic-universe .brand strong {
+    font-size: 19px;
+  }
+  .cosmic-universe .brand small {
+    font-size: 9px;
+  }
+  .cosmic-universe .space-trigger {
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+  }
+  .cosmic-universe .space-trigger > span,
+  .cosmic-universe .space-trigger > svg {
+    display: none;
+  }
+  .cosmic-universe .space-trigger .avatar {
+    display: flex;
+  }
+  .cosmic-universe .command-trigger {
+    width: 36px;
+    height: 36px;
+  }
+  .language-trigger {
+    padding: 8px;
+    height: 36px;
+    gap: 5px;
+  }
+  .language-trigger svg {
+    width: 15px;
+  }
+  .cosmic-universe .header-actions {
+    gap: 7px;
+  }
+  .graph-empty-state {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .graph-empty-state button {
+    margin-left: 38px;
+  }
+  .graph-mode-note {
+    font-size: 10px;
+  }
+  .graph-mode-switch button {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
+
+.cosmic-universe :is(.primary-button, .send-button, .toggle[aria-checked="true"]) {
+  background: #6883b8;
+  border-color: #9484d1;
+  color: #fff;
+}
+.cosmic-universe :is(.primary-button, .send-button):hover:not(:disabled) {
+  background: #627caf;
+  color: #fff;
+}
+
+/* Quiet, neutral reading layers leave the surrounding galaxy visible. */
+.cosmic-universe .glass-panel {
+  background: linear-gradient(135deg, #1a181fe8, #111116ee);
+  border-color: #e5dcf01f;
+  border-radius: 19px;
+  backdrop-filter: blur(18px);
+  box-shadow:
+    0 26px 80px #03020755,
+    inset 0 1px #ffffff08;
+}
+.cosmic-universe :is(.dialog-content, .command-dialog, .space-menu, .toast) {
+  background: #1b1923f5;
+  border-color: #e5dcf023;
+}
+.cosmic-universe :is(input, textarea, select) {
+  color-scheme: dark;
+  color: var(--text);
+  background-color: #101015;
+  border-color: #d9d2e326;
+}
+.cosmic-universe :is(input, textarea)::placeholder {
+  color: #8e899c;
+}
+.cosmic-universe :is(.primary-button, .send-button, .toggle[aria-checked="true"]) {
+  background: #49678f;
+  border-color: #829abe70;
+  color: #fff;
+  box-shadow: none;
+}
+.cosmic-universe :is(.primary-button, .send-button):hover:not(:disabled) {
+  background: #526f96;
+}
+.cosmic-universe
+  :is(
+    .composer,
+    .stage-note,
+    .model-missing,
+    .note-retained,
+    .chat-notice,
+    .chat-message.user .message-body
+  ) {
+  background: #211e2980;
+  border-color: #d9d2e326;
+}
+.cosmic-universe .app-header {
+  height: 80px;
+  max-width: 1540px;
+  width: 94%;
+  margin: 0 auto;
+}
+.cosmic-universe .primary-navigation a {
+  padding: 9px 12px;
+}
+.cosmic-universe .nav-active-surface {
+  background: #d9d2eb0c;
+  border-color: #d9d2eb20;
+}
+.cosmic-universe .primary-navigation a[aria-current="page"] {
+  color: #e5dfed;
+}
+.cosmic-universe .main-content {
+  width: 94%;
+  max-width: 1540px;
+  margin: 6px auto 0;
+}
+.cosmic-universe .page-stage {
+  align-items: flex-start;
+  padding: 12px 0 22px;
+}
+.cosmic-universe .workbench {
+  gap: 30px;
+}
+.cosmic-universe .chat-window {
+  max-width: none;
+  height: min(700px, calc(100dvh - 166px));
+  min-height: 540px;
+}
+.cosmic-universe .window-bar {
+  height: 62px;
+  padding: 0 25px;
+  background: #ffffff02;
+}
+.cosmic-universe .chat-welcome {
+  padding: 36px 42px 24px;
+}
+.cosmic-universe .welcome h2 {
+  font-size: clamp(25px, 2.7vw, 37px);
+  font-weight: 530;
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+}
+.cosmic-universe .welcome-mark {
+  margin-bottom: 22px;
+  border-radius: 13px;
+  background: #c4b2df0a;
+}
+.cosmic-universe .welcome-description {
+  max-width: 500px;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+.cosmic-universe .welcome-action {
+  padding: 10px 15px;
+  background: #ffffff05;
+}
+.cosmic-universe .composer textarea {
+  background: transparent;
+  padding: 17px 20px 6px;
+  min-height: 75px;
+}
+.cosmic-universe .composer-tools .tool-chip {
+  border-color: transparent;
+  background: transparent;
+  padding-left: 0;
+}
+.cosmic-universe .constellation-preview {
+  width: 280px;
+  flex: 0 0 280px;
+  padding-top: 24px;
+}
+.cosmic-universe .constellation-art {
+  opacity: 0.88;
+}
+.constellation-orbits {
+  stroke: #ded2ed;
+  stroke-opacity: 0.09;
+  stroke-width: 0.65;
+  stroke-dasharray: 2 7;
+}
+.cosmic-universe .constellation-caption {
+  padding: 4px 14px 0;
+}
+.cosmic-universe .constellation-caption p {
+  font-size: 22px;
+  font-weight: 400;
+  color: #dbd4e6;
+}
+.cosmic-universe .notes-heading {
+  padding: 23px 28px 20px;
+}
+.cosmic-universe .notes-heading h1 {
+  font-size: 26px;
+}
+.cosmic-universe .knowledge-tabs {
+  padding: 10px 27px;
+  background: #0a090d33;
+}
+.cosmic-universe .notes-directory {
+  background: #0c0b1066;
+}
+.cosmic-universe .notes-document {
+  padding: 24px 30px;
+}
+.cosmic-universe .note-reader {
+  background: transparent;
+  border: 0;
+  padding: 10px 4px;
+}
+.cosmic-universe .notes-welcome {
+  min-height: 360px;
+  padding: 30px 24px;
+  border: 0;
+  background: radial-gradient(ellipse at 50% 10%, #b4a3d00a, transparent 65%);
+}
+.cosmic-universe .notes-welcome h2 {
+  font-size: 24px;
+}
+.cosmic-universe .notes-welcome .welcome-constellation {
+  width: 200px;
+  height: 95px;
+  margin-bottom: 14px;
+}
+.cosmic-universe .memory-graph {
+  padding: 23px 28px;
+}
+.cosmic-universe .memory-graph > header h2 {
+  font-size: 22px;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+}
+.cosmic-universe .memory-graph > header p {
+  margin: 7px 0 0;
+}
+.cosmic-universe .graph-layout {
+  margin-top: 17px;
+  grid-template-columns: minmax(0, 1fr) 265px;
+  background: radial-gradient(ellipse at 34% 42%, #c1add412, transparent 66%), #0c0b10de;
+  border-radius: 13px;
+  border-color: #ded4eb1d;
+}
+.cosmic-universe .graph-layout > svg {
+  height: clamp(360px, calc(100dvh - 430px), 490px);
+  min-height: 0;
+}
+.cosmic-universe .graph-vacant {
+  display: none;
+}
+.cosmic-universe .graph-starfield {
+  color: #e2d7ed;
+}
+.cosmic-universe .graph-starfield ellipse {
+  opacity: 0.11;
+  stroke-dasharray: 2 9;
+}
+.cosmic-universe .graph-edge {
+  stroke: #d2bfd94a;
+  stroke-width: 0.8;
+}
+.cosmic-universe .graph-edge.selected {
+  stroke: #d4bfecaa;
+  stroke-width: 1.1;
+}
+.cosmic-universe .graph-node text {
+  fill: #c9c3d2;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+.cosmic-universe .graph-node.selected text {
+  fill: #eee8f5;
+}
+.cosmic-universe .graph-details {
+  position: relative;
+  background: #17151ee6;
+  padding: 25px 19px;
+}
+.graph-detail-close {
+  position: absolute;
+  right: 12px;
+  top: 13px;
+}
+.cosmic-universe .graph-details h3 {
+  font-size: 21px;
+  font-weight: 550;
+  padding-right: 10px;
+}
+.cosmic-universe .graph-relation {
+  background: #ffffff04;
+  border-color: #d9c9e818;
+}
+.cosmic-universe .graph-evidence {
+  background: #09080e55;
+}
+.graph-canvas-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 11px 0 0;
+}
+.graph-canvas-footer .graph-canvas-hint {
+  margin: 0;
+  text-align: right;
+}
+.graph-motion-status {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  color: var(--faint);
+  font-size: 10px;
+}
+.graph-motion-status > span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #8e839b;
+}
+.graph-motion-status > .moving-dot {
+  background: #b8a6d1;
+  box-shadow: 0 0 8px #b8a6d140;
+}
+.cosmos[data-paused="true"] *,
+.cosmos[data-paused="true"] {
+  animation-play-state: paused !important;
+}
+.stars-depth-0 {
+  animation: distant-sky 210s ease-in-out infinite alternate;
+  transform-origin: 67% 37%;
+}
+.stars-depth-1 {
+  animation: distant-sky 290s ease-in-out infinite alternate-reverse;
+  transform-origin: 67% 37%;
+  opacity: 0.55;
+}
+@keyframes distant-sky {
+  to {
+    transform: rotate(9deg) scale(1.035);
+  }
+}
+.cosmic-universe .settings-page {
+  max-width: 1140px;
+  padding: 30px 34px;
+}
+.cosmic-universe .settings-page h1,
+.cosmic-universe .collection-heading h1 {
+  font-size: 27px;
+  font-weight: 550;
+  letter-spacing: -0.025em;
+}
+.cosmic-universe .setting-section {
+  padding-top: 22px;
+  margin-top: 24px;
+}
+.cosmic-universe .collection-heading {
+  padding: 28px 32px 23px;
+}
+.cosmic-universe .collection-toolbar {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.cosmic-universe .app-footer {
+  max-width: 1540px;
+  width: 94%;
+  margin: 0 auto;
+  padding: 0 0 18px;
+}
+@media (max-width: 1100px) {
+  .cosmic-universe .constellation-preview {
+    width: 220px;
+    flex-basis: 220px;
+  }
+  .cosmic-universe .workbench {
+    gap: 20px;
+  }
+}
+@media (max-width: 930px) {
+  .cosmic-universe .constellation-preview {
+    display: none;
+  }
+  .cosmic-universe .chat-window {
+    min-height: 510px;
+  }
+  .cosmic-universe .graph-layout {
+    grid-template-columns: minmax(0, 1fr) 240px;
+  }
+}
+@media (max-width: 850px) {
+  .cosmic-universe .graph-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cosmic-universe .graph-layout > svg {
+    min-height: 280px;
+  }
+  .cosmic-universe .graph-details {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .cosmic-universe .notes-document {
+    padding: 20px;
+  }
+  .cosmic-universe .settings-page {
+    padding: 26px 23px;
+  }
+  .cosmic-universe .graph-node text {
+    font-size: 15px;
+  }
+  .graph-canvas-footer {
+    justify-content: center;
+  }
+  .graph-canvas-footer .graph-canvas-hint {
+    text-align: center;
+  }
+}
+@media (max-width: 550px) {
+  .cosmic-universe .app-header {
+    width: 92%;
+    height: 72px;
+    margin: 0 auto;
+  }
+  .cosmic-universe .main-content {
+    width: 94%;
+  }
+  .cosmic-universe .window-bar {
+    height: 56px;
+    padding: 0 16px;
+  }
+  .cosmic-universe .chat-window {
+    height: calc(100dvh - 160px);
+    min-height: 490px;
+    border-radius: 15px;
+  }
+  .cosmic-universe .chat-welcome {
+    padding: 29px 23px 20px;
+  }
+  .cosmic-universe .welcome h2 {
+    font-size: 25px;
+  }
+  .cosmic-universe .composer textarea {
+    padding: 14px 14px 4px;
+  }
+  .cosmic-universe .memory-graph {
+    padding: 20px 13px;
+  }
+  .cosmic-universe .notes-heading {
+    padding: 22px 19px;
+  }
+  .cosmic-universe .knowledge-tabs {
+    padding: 9px 13px;
+  }
+  .cosmic-universe .notes-document {
+    padding: 17px;
+  }
+  .cosmic-universe .settings-page {
+    padding: 24px 18px;
+  }
+  .cosmic-universe .collection-heading {
+    padding: 24px 20px;
+  }
+  .cosmic-universe .collection-toolbar {
+    padding: 15px 20px;
+  }
+  .cosmic-universe .graph-motion-control {
+    font-size: 11px;
+  }
+}
+
+.cosmic-universe .graph-node:focus-visible > g > circle {
+  stroke: #cbbcdb;
+  stroke-width: 1.5;
+}
+.constellation-preview[data-paused="true"] * {
+  animation-play-state: paused !important;
+}
+@media (max-width: 550px) {
+  .cosmic-universe .space-trigger > svg:first-child {
+    display: block;
+  }
+  .cosmic-universe .space-trigger > svg:last-child {
+    display: none;
+  }
+}
+
+/* Fixed dialogs keep their centering translation throughout entry and exit. */
+.cosmic-universe [data-state="open"]:is(.command-dialog, .delete-dialog) {
+  animation: centered-surface-arrive 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.cosmic-universe [data-state="closed"]:is(.command-dialog, .delete-dialog) {
+  animation: centered-surface-leave 0.15s ease both;
+}
+@keyframes centered-surface-arrive {
+  from {
+    opacity: 0;
+    scale: 0.98;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes centered-surface-leave {
+  to {
+    opacity: 0;
+    scale: 0.98;
+  }
+}
+@media (max-width: 550px) {
+  .cosmic-universe .graph-layout > svg {
+    height: 280px;
+    min-height: 280px;
+  }
+}
+
+/* D3 owns node coordinates; the viewport and labels use actual screen pixels. */
+.cosmic-universe .force-graph-workspace .graph-layout {
+  background: #080d18;
+  border-color: #bedbff20;
+}
+.cosmic-universe .force-graph-workspace .force-graph {
+  width: 100%;
+  height: clamp(380px, calc(100dvh - 410px), 540px);
+  min-height: 0;
+  touch-action: none;
+  cursor: grab;
+  background:
+    radial-gradient(ellipse at 35% 42%, #19376233, transparent 66%),
+    radial-gradient(ellipse at 82% 12%, #252b5226, transparent 52%), #070c16;
+}
+.force-graph:active {
+  cursor: grabbing;
+}
+.force-graph .graph-starfield {
+  fill: #d3e8ff;
+}
+.cosmic-universe .force-graph .graph-edge {
+  cursor: pointer;
+  transition: opacity 0.18s;
+}
+.force-graph .graph-edge-hit {
+  stroke: transparent;
+  stroke-width: 12;
+  pointer-events: stroke;
+}
+.force-graph .graph-edge-core {
+  stroke: #bddcff55;
+  stroke-width: 0.65;
+  transition:
+    stroke 0.18s,
+    stroke-width 0.18s;
+}
+.force-graph .graph-edge-glow {
+  stroke-width: 3;
+  opacity: 0.45;
+  transition:
+    opacity 0.18s,
+    stroke-width 0.18s;
+}
+.force-graph .graph-edge:is(.selected, .highlighted) .graph-edge-core {
+  stroke: #dbf1ffd9;
+  stroke-width: 0.9;
+}
+.force-graph .graph-edge:is(.selected, .highlighted) .graph-edge-glow {
+  opacity: 0.95;
+  stroke-width: 4;
+}
+.cosmic-universe .force-graph .graph-edge.dimmed {
+  opacity: 0.38;
+}
+.force-graph .graph-node {
+  cursor: grab;
+  outline: none;
+}
+.force-graph .graph-node.dragging {
+  cursor: grabbing;
+}
+.force-graph .graph-hit {
+  fill: transparent;
+  pointer-events: all;
+}
+.force-graph .graph-aura {
+  opacity: 0.75;
+  transition: opacity 0.18s;
+}
+.force-graph .graph-node:is(.highlighted, .selected) .graph-aura {
+  opacity: 1;
+}
+.force-graph .graph-node.dimmed .graph-aura {
+  opacity: 0.3;
+}
+.force-graph .graph-rays {
+  opacity: 0.8;
+}
+.force-graph .graph-core {
+  fill: #ffffff;
+  fill-opacity: 0.92;
+  stroke: transparent;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+  transition:
+    fill-opacity 0.18s,
+    stroke 0.18s;
+}
+.force-graph .graph-node:is(.highlighted, .selected) .graph-core {
+  fill-opacity: 1;
+}
+.force-graph .graph-node:focus-visible .graph-core {
+  stroke: #c8beed;
+}
+.force-graph .graph-node.dimmed .graph-core {
+  fill-opacity: 0.72;
+}
+.cosmic-universe .force-graph .graph-node text {
+  display: block;
+  font-size: 12px;
+  fill: #c9c6d2;
+  stroke: #070c16;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  pointer-events: none;
+  transition: fill 0.18s;
+}
+.cosmic-universe .force-graph .graph-node.highlighted text {
+  fill: #f3f0fa;
+}
+.cosmic-universe .force-graph .graph-node.dimmed text {
+  fill: #9ba6bb;
+}
+.graph-weight-hint {
+  color: var(--muted);
+  font-size: 11px;
+}
+@media (max-width: 850px) {
+  .cosmic-universe .force-graph-workspace .force-graph {
+    height: 420px;
+  }
+}
+
+/* First visit: language and model setup are separate, optional steps. */
+.cosmic-universe .brand strong {
+  font-size: 19px;
+  letter-spacing: -0.025em;
+}
+.cosmic-universe .avatar {
+  font-size: 10px;
+}
+.welcome-main {
+  width: 100%;
+}
+.welcome-loading {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.welcome-screen {
+  max-width: 1360px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 32px clamp(24px, 4vw, 60px);
+  display: flex;
+  flex-direction: column;
+}
+.welcome-topbar,
+.welcome-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.welcome-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.welcome-brand .brand-mark {
+  width: 34px;
+  height: 34px;
+}
+.welcome-version {
+  color: #a8b4cb;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 7px 12px;
+  border: 1px solid #bbd5ff22;
+  border-radius: 20px;
+}
+.welcome-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+  gap: 42px;
+  align-items: center;
+  padding: 76px 0 60px;
+}
+.welcome-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 610px;
+}
+.welcome-copy > .eyebrow {
+  color: #aec2e2;
+  letter-spacing: 0.12em;
+  margin: 0 0 22px;
+}
+.welcome-copy h1 {
+  margin: 0;
+  color: #f4f5fb;
+  font-size: clamp(36px, 4.4vw, 62px);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.welcome-subtitle {
+  color: #a9b8d1;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  margin: 20px 0 0;
+}
+.welcome-description {
+  max-width: 470px;
+  color: #c2c8d7;
+  font-size: 15px;
+  line-height: 1.85;
+  margin: 30px 0;
+}
+.welcome-language {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.welcome-language legend {
+  font-size: 12px;
+  color: #a2adc3;
+  margin-bottom: 12px;
+}
+.welcome-language-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 440px;
+}
+.welcome-language-choice {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: left;
+  padding: 18px 36px 18px 18px;
+  border: 1px solid #c5d9fb2a;
+  border-radius: 12px;
+  background: #0e1727b0;
+  color: #e5ecf8;
+  min-height: 86px;
+}
+.welcome-language-choice strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+.welcome-language-choice small {
+  color: #9aaac4;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.welcome-language-choice > svg {
+  position: absolute;
+  top: 18px;
+  right: 14px;
+  color: #c5ddff;
+}
+.welcome-language-choice[aria-pressed="true"] {
+  background: #233d6138;
+  border-color: #b6d5ff88;
+  box-shadow: inset 0 0 0 1px #cde1ff0a;
+}
+.welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 26px;
+  margin-top: 28px;
+}
+.cosmic-universe .welcome-actions .primary-button {
+  padding: 15px 23px;
+  min-width: 176px;
+  justify-content: space-between;
+  gap: 24px;
+  background: #c5dcf8;
+  color: #0a1423;
+  border-color: #d6e8ff;
+  font-size: 14px;
+}
+.welcome-skip {
+  padding: 12px 0;
+  border: 0;
+  background: transparent;
+  color: #bdcce1;
+  font-size: 13px;
+}
+.welcome-skip:hover {
+  color: #f1f7ff;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.welcome-help {
+  max-width: 440px;
+  color: #8f9cb6;
+  font-size: 11px;
+  line-height: 1.8;
+  margin: 19px 0 0;
+}
+.welcome-visual {
+  position: relative;
+  min-width: 0;
+  background: radial-gradient(ellipse, #31579314, transparent 70%);
+}
+.welcome-sky {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.welcome-orbit {
+  fill: none;
+  stroke: #adc9fa10;
+  stroke-width: 0.6;
+  stroke-dasharray: 2 12;
+}
+.welcome-connection {
+  stroke: #bfdcff44;
+  stroke-width: 0.8;
+}
+.welcome-visual-caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #a4b2c9;
+  font-size: 12px;
+  margin-top: 16px;
+}
+.welcome-footer {
+  padding-top: 22px;
+  border-top: 1px solid #c8daf916;
+  color: #8f9db7;
+  font-size: 11px;
+}
+.welcome-motion {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 13px;
+  border: 1px solid #b8cdef25;
+  border-radius: 20px;
+  color: #b7c5dd;
+  background: #ffffff04;
+  font-size: 11px;
+}
+.setup-guide {
+  margin: 27px 0;
+  padding: 23px;
+  border: 1px solid #a6c8f642;
+  border-radius: 12px;
+  background: #172f4b38;
+}
+.setup-guide > .eyebrow {
+  margin: 0 0 10px;
+}
+.setup-guide h2 {
+  margin: 0 0 12px;
+  font-size: 21px;
+  font-weight: 500;
+}
+.setup-guide > p:not(.eyebrow) {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #abbad0;
+  max-width: 680px;
+}
+.setup-guide > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px;
+  margin-top: 17px;
+}
+@media (max-width: 900px) {
+  .welcome-screen {
+    max-width: 650px;
+    padding: 26px 28px;
+  }
+  .welcome-layout {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 54px 0;
+  }
+  .welcome-visual {
+    display: none;
+  }
+  .welcome-copy h1 {
+    max-width: 560px;
+    font-size: 48px;
+  }
+  .welcome-language-options {
+    max-width: none;
+  }
+}
+@media (max-width: 550px) {
+  .welcome-screen {
+    padding: 24px;
+  }
+  .welcome-brand {
+    font-size: 20px;
+    gap: 10px;
+  }
+  .welcome-brand .brand-mark {
+    width: 28px;
+    height: 28px;
+  }
+  .welcome-layout {
+    padding: 46px 0 35px;
+  }
+  .welcome-copy h1 {
+    font-size: 38px;
+    line-height: 1.25;
+  }
+  .welcome-copy > .eyebrow {
+    margin-bottom: 20px;
+  }
+  .welcome-description {
+    font-size: 13px;
+    margin: 25px 0;
+  }
+  .welcome-subtitle {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .welcome-language-choice {
+    padding: 16px 28px 16px 13px;
+  }
+  .welcome-language-choice > svg {
+    right: 10px;
+    top: 16px;
+    width: 14px;
+  }
+  .welcome-actions {
+    gap: 20px;
+  }
+  .welcome-help {
+    font-size: 11px;
+  }
+  .welcome-footer {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .setup-guide {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.next-test/
+out/
+playwright-report/
+test-results/
+pnpm-lock.yaml
+AGENTS.md
+next-env.d.ts
+.env*
+*.tsbuildinfo
+artifacts/*.png
+public/assets/*.png

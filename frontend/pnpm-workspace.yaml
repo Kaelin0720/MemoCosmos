@@ -1,0 +1,8 @@
+allowBuilds:
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - framer-motion@14.1.0
+  - motion-dom@14.1.0
+  - motion-utils@14.1.0
+  - motion@14.1.0
+  - prettier@3.9.10

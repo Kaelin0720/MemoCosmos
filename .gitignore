@@ -1,0 +1,63 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+
+# Frontend dependencies and generated output
+node_modules/
+.next/
+.next-test/
+out/
+dist/
+build/
+.pnpm-store/
+*.tsbuildinfo
+playwright-report/
+test-results/
+
+# Python and local data
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+data/
+uploads/
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-wal
+*.sqlite3-shm
+*.memorypack
+yihe-memory*.zip
+memory-vaults/
+backups/
+
+# Editor and operating system files
+.DS_Store
+.idea/
+.vscode/
+*.log
+tmp/
+artifacts/
+
+# Private planning notes and local review captures
+/docs/*
+!/docs/usage.md
+!/docs/configuration.md
+!/docs/troubleshooting.md
+!/docs/en/
+/docs/en/*
+!/docs/en/usage.md
+!/docs/en/configuration.md
+!/docs/en/troubleshooting.md
+/frontend/AGENTS.md
+/frontend/previews/
+/frontend/public/assets/README.md
+/output/

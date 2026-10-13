@@ -1,0 +1,87 @@
+name: Checks
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend · ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.13.0"
+          python-version: "3.13"
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - name: Install backend
+        run: uv sync --project backend --locked
+      - name: Lint Python
+        run: uv run --project backend --no-sync ruff check backend run.py preview_server.py tools tests
+      - name: Test backend
+        run: uv run --project backend --no-sync pytest backend/tests
+      - name: Test launcher, local proxy, and packaging
+        run: uv run --project backend --no-sync python -m unittest discover -s tests -p "test_*.py"
+      - name: Verify complete local HTTP workflow
+        if: runner.os != 'Windows'
+        run: uv run --project backend --no-sync python tests/full_flow_smoke.py
+
+  frontend:
+    name: Frontend · production and integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Install pnpm
+        run: npm install -g pnpm@11.19.0
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.13.0"
+          python-version: "3.13"
+      - name: Install Python integration dependencies
+        run: uv sync --project ../backend --locked
+      - name: Install frontend
+        run: pnpm install --frozen-lockfile
+      - name: Build production interface
+        run: pnpm build
+      - name: Check types, lint, and format
+        run: |
+          pnpm typecheck
+          pnpm lint
+          pnpm format:check
+      - name: Install browser
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Run UI and local integration tests
+        env:
+          YIHE_LIVE_COMPLETION: "1"
+          YIHE_LIVE_NOTES: "1"
+          YIHE_LIVE_AGENT: "1"
+        run: pnpm test --workers=3
+      - name: Rebuild without test endpoints
+        run: pnpm build
+      - name: Verify release package
+        run: uv run --project ../backend --no-sync python ../tools/package_release.py
