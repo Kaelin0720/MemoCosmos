@@ -5,7 +5,6 @@ import os
 import socket
 import subprocess
 import sys
-import tempfile
 import unittest
 from pathlib import Path
 
@@ -25,24 +24,25 @@ class LauncherTests(unittest.TestCase):
         self.assertTrue(launcher.port_available(port))
 
     def test_ready_waits_for_a_real_http_process_and_stop_reaps_it(self):
-        with tempfile.TemporaryDirectory() as directory, socket.socket() as reservation:
-            Path(directory, "index.html").write_text(
-                "temporary preview", encoding="utf-8"
-            )
+        with socket.socket() as reservation:
             reservation.bind(("127.0.0.1", 0))
             port = reservation.getsockname()[1]
             reservation.close()
+            server = (
+                "import socket,sys\n"
+                "listener=socket.socket()\n"
+                "listener.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)\n"
+                "listener.bind(('127.0.0.1',int(sys.argv[1])))\n"
+                "listener.listen()\n"
+                "while True:\n"
+                " client,_=listener.accept()\n"
+                " try:\n"
+                "  client.recv(4096)\n"
+                "  client.sendall(b'HTTP/1.1 200 OK\\r\\nContent-Length: 0\\r\\nConnection: close\\r\\n\\r\\n')\n"
+                " finally: client.close()\n"
+            )
             process = subprocess.Popen(
-                [
-                    sys.executable,
-                    "-m",
-                    "http.server",
-                    str(port),
-                    "--bind",
-                    "127.0.0.1",
-                    "--directory",
-                    directory,
-                ],
+                [sys.executable, "-u", "-c", server, str(port)],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
                 start_new_session=os.name == "posix",
