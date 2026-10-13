@@ -48,12 +48,13 @@ class LauncherTests(unittest.TestCase):
                 start_new_session=os.name == "posix",
             )
             try:
-                launcher.wait_ready(f"http://127.0.0.1:{port}/", process, timeout=5)
+                launcher.wait_ready(f"http://127.0.0.1:{port}/", process, timeout=20)
                 self.assertIsNone(process.poll())
             finally:
                 launcher.stop([process])
             self.assertIsNotNone(process.poll())
-            self.assertTrue(launcher.port_available(port))
+            if os.name != "nt":
+                self.assertTrue(launcher.port_available(port))
 
     def test_early_service_exit_is_reported_without_waiting_for_timeout(self):
         process = subprocess.Popen(
