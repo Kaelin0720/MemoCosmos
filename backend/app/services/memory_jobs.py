@@ -22,6 +22,7 @@ from app.core.time import local_zone
 from app.db.models import (
     AgentRun,
     DeletedOperation,
+    ExternalTurn,
     MemoryJob,
     MemoryJobItem,
     MemoryRelation,
@@ -66,9 +67,9 @@ class MemoryJobs:
         self.loop = None
         self.closing = False
 
-    def enqueue(self, session, run):
-        content = session.get(Message, run.user_message_id).content
-        explicit = bool(
+    @staticmethod
+    def explicitly_requested(content):
+        return bool(
             re.search(
                 r"记住|记录下来|存到知识|加入知识|保存到|"
                 r"\b(?:remember|save|store|record)\s+(?:this|that|my|these|the)\b",
@@ -76,14 +77,23 @@ class MemoryJobs:
                 re.I,
             )
         )
-        if not session.get(MemorySetting, 1).auto_memory and not explicit:
+
+    def should_capture(self, session, content):
+        return session.get(MemorySetting, 1).auto_memory or self.explicitly_requested(content)
+
+    def enqueue(self, session, run):
+        content = session.get(Message, run.user_message_id).content
+        explicit = self.explicitly_requested(content)
+        if not self.should_capture(session, content):
             return
-        if session.scalar(select(MemoryJob.id).where(MemoryJob.run_id == run.id)):
-            return
+        existing = session.scalar(select(MemoryJob.id).where(MemoryJob.run_id == run.id))
+        if existing:
+            return existing
         timestamp = utc_timestamp()
+        identifier = str(uuid4())
         session.add(
             MemoryJob(
-                id=str(uuid4()),
+                id=identifier,
                 conversation_id=run.conversation_id,
                 run_id=run.id,
                 user_message_id=run.user_message_id,
@@ -99,6 +109,7 @@ class MemoryJobs:
             )
         )
         self._notify()
+        return identifier
 
     def _notify(self):
         if self.loop and not self.loop.is_closed():
@@ -154,6 +165,7 @@ class MemoryJobs:
                     and not session.get(NoteDeletion, note.id)
                 ):
                     notes.append(dict(id=note.id, title=note.title, action=item.action))
+            external = session.scalar(select(ExternalTurn).where(ExternalTurn.run_id == job.run_id))
             return dict(
                 id=job.id,
                 conversation_id=job.conversation_id,
@@ -168,6 +180,11 @@ class MemoryJobs:
                 notes=notes,
                 created_at=job.created_at,
                 updated_at=job.updated_at,
+                source=dict(
+                    app=external.source, session_id=external.session_id, turn_id=external.turn_id
+                )
+                if external
+                else dict(app="memocosmos"),
             )
 
     def list(self, conversation_id=None, limit=20):
@@ -241,7 +258,7 @@ class MemoryJobs:
             assistant = session.get(Message, run.assistant_message_id)
             tags = [
                 dict(name=t.name, created_by=t.created_by)
-                for t in session.scalars(select(Tag).order_by(Tag.created_at.desc()).limit(100))
+                for t in session.scalars(select(Tag).order_by(Tag.created_at.desc()).limit(20))
             ]
             context = dict(
                 user=user.content[:7000],
@@ -252,7 +269,26 @@ class MemoryJobs:
                 clarification=job.clarification[:2000],
                 tags=tags,
             )
-        found = self.knowledge.search(q=context["user"][:200], limit=5)["items"]
+            external = session.scalar(select(ExternalTurn).where(ExternalTurn.run_id == job.run_id))
+            if external:
+                context["source"] = dict(
+                    app=external.source,
+                    session_id=external.session_id,
+                    turn_id=external.turn_id,
+                    truncated=external.truncated,
+                )
+        retrieved = self.knowledge.search(q=context["user"][:200], limit=5, token_budget=1400)
+        found = retrieved["items"]
+        relevant = {tag["id"]: tag["name"] for hit in found for tag in hit["tags"]}
+        with self.sessions() as session:
+            prioritized = [
+                dict(name=tag.name, created_by=tag.created_by)
+                for tag in session.scalars(select(Tag).where(Tag.id.in_(relevant)))
+            ]
+        names = {tag["name"] for tag in prioritized}
+        context["tags"] = (
+            prioritized + [tag for tag in context["tags"] if tag["name"] not in names]
+        )[:24]
         context["related_notes"] = [
             dict(
                 note_id=n["note_id"],

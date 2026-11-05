@@ -14,7 +14,8 @@ Bring your own cloud model through an OpenAI-compatible API URL, model name, and
 - Organize knowledge automatically, supplement existing topics, and confirm ambiguous corrections
 - Browse an Obsidian-style document tree, edit Markdown, manage tags, and review versions
 - Confirm changes made in an external editor before updating the local index
-- Explore a moving constellation of documents with blue-white stars, connections, and relation evidence
+- Explore a 3D memory universe or an ordinary 2D force graph, and open each body's note and relationship evidence
+- Choose from 52 stars, planets and moons with independent ring options
 - Export and restore conversations, notes, tags, history, and relationships without exporting API Keys
 - Choose English or Simplified Chinese in the welcome screen or language menu
 
@@ -25,8 +26,8 @@ MemoCosmos runs natively on macOS/Linux, and on Windows through WSL2 Ubuntu. Nat
 ### Release package
 
 1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/).
-2. Download **MemoCosmos-1.0.0.zip** from [Releases](https://github.com/Kaelin0720/MemoCosmos/releases/tag/v1.0.0) and extract it. Choose the named release package, which includes the built interface; GitHub's automatic **Source code** archives require the source-build steps below.
-3. Open a terminal in the extracted `MemoCosmos-1.0.0` folder and run:
+2. Download **MemoCosmos-1.0.1.zip** from [Releases](https://github.com/Kaelin0720/MemoCosmos/releases/tag/v1.0.1) and extract it. Choose the named release package, which includes the built interface; GitHub's automatic **Source code** archives require the source-build steps below.
+3. Open a terminal in the extracted `MemoCosmos-1.0.1` folder and run:
 
 ```sh
 uv sync --project backend --locked --no-dev --default-index https://pypi.org/simple
@@ -60,7 +61,7 @@ In PyCharm, open the project root, select `backend/.venv/bin/python` on macOS/Li
 
 ### Windows with WSL2
 
-Install [WSL2 Ubuntu](https://learn.microsoft.com/en-us/windows/wsl/install), then follow the macOS/Linux steps **inside the Ubuntu terminal**. Keep the application and vault inside the Linux home directory, such as `~/MemoCosmos-1.0.0`, rather than a mounted Windows directory under `/mnt/c`. Install the Linux version of uv in Ubuntu. Open the printed `http://127.0.0.1:3000/` address in your Windows browser if it does not open automatically.
+Install [WSL2 Ubuntu](https://learn.microsoft.com/en-us/windows/wsl/install), then follow the macOS/Linux steps **inside the Ubuntu terminal**. Keep the application and vault inside the Linux home directory, such as `~/MemoCosmos-1.0.1`, rather than a mounted Windows directory under `/mnt/c`. Install the Linux version of uv in Ubuntu. Open the printed `http://127.0.0.1:3000/` address in your Windows browser if it does not open automatically.
 
 ## Connect your model
 
@@ -97,9 +98,23 @@ The vault contains Markdown files and a SQLite database. API configuration is st
 
 To upgrade, export a backup, stop the current app, install the new release in a new folder, and start it. Default vault paths remain the same. If you use a custom vault, pass its absolute path with `--memory-dir`. Never overwrite your vault with the application folder.
 
-## Version 1.0
+## Version 1.0.1
 
-MemoCosmos uses Next.js, React, Motion, D3.js, FastAPI, Deep Agents, Markdown, and SQLite. Version 1.0 provides the chat-to-notes-to-retrieval workflow and local memory migration. Retrieval uses tags, keywords, and sections; graph nodes represent documents. Vector retrieval, arbitrary entity graphs, multi-device sync, and native desktop installers are not included in this release.
+MemoCosmos uses Next.js, React, Motion, D3.js, Three.js, FastAPI, Deep Agents, Markdown, and SQLite. It provides the chat-to-notes-to-retrieval workflow and local memory migration. Retrieval uses tag routing, keywords, sections and model-directed exploration of confirmed relationships; graph nodes represent real documents. Vector retrieval, arbitrary entity graphs, multi-device sync, and native desktop installers are not included.
+
+## Knowledge universe and recall
+
+Switch between the 3D universe and the ordinary 2D force graph in the knowledge workspace. Each body represents a real note. Tags group notes into regions; confirmed relationships determine connections and relative weight. Open the appearance library to choose from 36 planets, 8 stars and 8 moons, with independent ring options. Appearance preferences stay in the current browser and do not change note content or create factual relationships.
+
+Recall first locates documents using local tags and section keywords, then automatically includes their direct relationships without loading neighboring documents. The model decides which related document, if any, to read next. Each document read includes its own direct relationships; the model repeats this process only while it needs more evidence and stops when it can answer. Initial excerpts have a default budget of approximately 2,600 locally estimated tokens; provider billing may differ. Explicit tag filters remain strict. The graph's Recall field finds direct matches locally; model-directed exploration happens in chat and uses your configured cloud model.
+
+The assistant also receives a small relationship neighborhood with edge direction, relationship type, supporting evidence, document versions and source links. It can choose a related document or another relationship page when needed. There is no fixed total hop count; per-turn budgets and duplicate-read checks bound the process. If a budget is reached, the assistant should identify what remains unverified. A document link is a retrieval route, not proof of causation; inferred conclusions should be identified as inferences and supported by the underlying notes. Only selected context is sent to your configured cloud provider.
+
+In the 3D view, enter a galaxy to explore a network of knowledge stars, then select a star to approach its world. Document content lights a star; headings or source dates alone leave a dim blue marker. Size follows connection count. The 2D view retains its force-directed layout.
+
+## Agent memory plugin
+
+Use the local MCP memory service and the incremental Codex desktop capture adapter. See the [plugin setup and usage guide](docs/en/plugins.md).
 
 ## License
 

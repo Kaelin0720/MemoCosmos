@@ -110,11 +110,24 @@ const connections = [
 ] as const;
 export function constellationPreview(locale: Locale) {
   const en = locale === "en";
+  const regions = [
+    { id: "explore-learning", name: en ? "Learning and technology" : "学习与技术", root: 2 },
+    { id: "explore-personal", name: en ? "Personal memory" : "个人记忆", root: 0 },
+    { id: "explore-work", name: en ? "Work and experience" : "工作与经验", root: 12 },
+  ];
   const nodes = topics.map((topic, index) => ({
     id: `explore-${index}`,
     title: topic[en ? 1 : 0],
     folder: en ? "Knowledge connections" : "知识连接",
-    tags: [{ id: "explore-topic", name: en ? "Exploration" : "探索" }],
+    tags: [
+      {
+        id: regions[[0, 1, 9, 10].includes(index) ? 1 : [11, 12].includes(index) ? 2 : 0].id,
+        name: regions[[0, 1, 9, 10].includes(index) ? 1 : [11, 12].includes(index) ? 2 : 0].name,
+      },
+    ],
+    region_id: regions[[0, 1, 9, 10].includes(index) ? 1 : [11, 12].includes(index) ? 2 : 0].id,
+    kind: regions.some((region) => region.root === index) ? ("star" as const) : undefined,
+    has_knowledge: Boolean(topic[2]),
   }));
   const graph: MemoryGraph = {
     nodes,

@@ -14,7 +14,8 @@ MemoCosmos 是运行在自己电脑上的第二大脑。你通过日常对话告
 - 自动构建知识文档、补充同主题内容，有歧义的更正先等待确认
 - Obsidian 风格的目录树、Markdown 阅读编辑、标签池和历史版本
 - 核对外部编辑器修改，再确认导入并更新索引
-- 动态关系星图：蓝白星光、力导向布局、悬浮高亮、拖拽缩放和关系证据
+- 三维记忆宇宙与二维力导向图谱，可旋转、缩放，点击天体阅读文档与关系证据
+- 52 种恒星、行星和卫星外观，支持独立搭配星环与中英文切换
 - 导出与恢复聊天、文档、标签、历史和关系，API Key 不随记忆包导出
 - 首次欢迎页与菜单中的简体中文、English 切换
 
@@ -25,8 +26,8 @@ MemoCosmos 原生支持 macOS/Linux，Windows 通过 WSL2 Ubuntu 运行。1.0 �
 ### 使用发布包
 
 1. 安装 [uv](https://docs.astral.sh/uv/getting-started/installation/)
-2. 在 [v1.0.0 发布页](https://github.com/Kaelin0720/MemoCosmos/releases/tag/v1.0.0) 下载 **MemoCosmos-1.0.0.zip**，然后解压。选择这个带已构建界面的发布包；GitHub 自动提供的 **Source code** 压缩包需要按下方源码步骤构建
-3. 在解压后的 `MemoCosmos-1.0.0` 目录打开终端，执行：
+2. 在 [v1.0.1 发布页](https://github.com/Kaelin0720/MemoCosmos/releases/tag/v1.0.1) 下载 **MemoCosmos-1.0.1.zip**，然后解压。选择这个带已构建界面的发布包；GitHub 自动提供的 **Source code** 压缩包需要按下方源码步骤构建
+3. 在解压后的 `MemoCosmos-1.0.1` 目录打开终端，执行：
 
 ```sh
 uv sync --project backend --locked --no-dev --default-index https://pypi.org/simple
@@ -60,7 +61,7 @@ uv run --project backend --no-sync python run.py
 
 ### Windows 使用 WSL2
 
-先安装 [WSL2 Ubuntu](https://learn.microsoft.com/en-us/windows/wsl/install)，再在 Ubuntu 终端中按照上面的 macOS/Linux 步骤操作。应用和记忆库放在 Linux 用户目录，例如 `~/MemoCosmos-1.0.0`，不要放在 `/mnt/c` 下的 Windows 挂载目录中。在 Ubuntu 内安装 Linux 版 uv。浏览器未自动打开时，把终端显示的 `http://127.0.0.1:3000/` 地址复制到 Windows 浏览器。
+先安装 [WSL2 Ubuntu](https://learn.microsoft.com/en-us/windows/wsl/install)，再在 Ubuntu 终端中按照上面的 macOS/Linux 步骤操作。应用和记忆库放在 Linux 用户目录，例如 `~/MemoCosmos-1.0.1`，不要放在 `/mnt/c` 下的 Windows 挂载目录中。在 Ubuntu 内安装 Linux 版 uv。浏览器未自动打开时，把终端显示的 `http://127.0.0.1:3000/` 地址复制到 Windows 浏览器。
 
 ## 配置 API Key
 
@@ -80,7 +81,11 @@ uv run --project backend --no-sync python run.py
 
 在工作台聊聊今天学到的知识、做过的事情，或明确告诉助手希望记住什么。聊天完成后，后台整理有保存价值的内容；在会话中或 **知识宇宙 → 整理与确认** 查看结果。有歧义的变更等待你确认。
 
-打开生成的文档，可以自己修改正文、目录与标签，点击高亮文档标题跳转。以后提问时，助手按相关标签和章节检索，只发送必要的上下文。
+打开生成的文档，可以自己修改正文、目录与标签，点击高亮文档标题跳转。以后提问时，助手先通过标签和章节关键词定位相关文档，自动取得它们的直接关系。模型判断是否需要沿某条关系继续读取；每读一份文档，也会取得它的直接关系，再判断下一步，证据足够就停止并回答。首次搜索摘录默认限制在约 2600 个本地估算 token 内；供应商实际计费 token 以其账单为准。星图下方的“唤起记忆”可以查找直接匹配的文档。
+
+助手还会拿到一小片可追溯的关系图，包含关系方向、类型、依据、文档版本和来源链接；不会自动加载邻居正文，由模型选择需要的文档或关系页继续查看，没有固定的总跳数。读取仍受每轮预算和去重约束；达到预算时应说明未核实部分。文档引用只提供检索线索，不证明因果。推断应明确标注，并回到正文寻找支持。只有选中的上下文会发送给你配置的云端模型。
+
+三维视图可以从宇宙进入星系，再点击知识光点靠近星球。已有正文的节点发亮，只有标题或来源日期的节点呈暗蓝色；大小表示关联数量。星系内部按多中心知识网络分布，二维图保留原有力导向布局。
 
 [使用与迁移指南](docs/usage.md)介绍编辑、更正确认、星图、备份与换机器的方法。[常见问题](docs/troubleshooting.md)介绍启动、配置和恢复问题。
 
@@ -99,7 +104,11 @@ uv run --project backend --no-sync python run.py
 
 ## 1.0 的范围
 
-技术栈为 Next.js、React、Motion、D3.js、FastAPI、Deep Agents、Markdown 和 SQLite。1.0 提供聊天、知识整理、检索回忆与本地记忆迁移的主要闭环。检索使用标签、关键词与章节，星图以文档为节点。向量检索、任意实体图谱、多设备同步和原生桌面安装器不在本次版本中。
+技术栈为 Next.js、React、Motion、D3.js、Three.js、FastAPI、Deep Agents、Markdown 和 SQLite。检索使用标签路由、关键词与章节，由模型决定是否沿带证据的关系继续读取；星图以真实文档为节点，按标签划分星域。显示的天体类型与材质是外观表达，不会改变笔记事实或创建新的事实关联。外观偏好保存在当前浏览器。向量检索、任意实体图谱、多设备同步和原生桌面安装器不在当前版本中。
+
+## 智能体记忆插件
+
+MemoCosmos 提供本地 MCP 记忆服务和 Codex 桌面版增量对话采集适配器。见 [插件安装与使用](docs/plugins.md)。
 
 ## 许可证
 

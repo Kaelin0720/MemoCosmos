@@ -30,7 +30,14 @@ class PackageTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             tracked = self.fixture(root)
-            for name in ("backend/model.json", "docs/architecture.md", ".env"):
+            for name in (
+                "backend/model.json",
+                "docs/architecture.md",
+                ".env",
+                "frontend/out/assets/README.md",
+                "frontend/out/assets/notes.markdown",
+                "frontend/out/assets/reference.mdx",
+            ):
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text("private-must-not-be-published", encoding="utf-8")

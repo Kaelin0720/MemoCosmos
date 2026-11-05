@@ -80,6 +80,7 @@ def test_real_chatopenai_adapter_uses_configured_protocol_and_no_retry(tmp_path,
         "list_tags",
         "search_memory",
         "read_note",
+        "explore_memory_graph",
     ]
     assert constructed[0].max_retries == 0 and constructed[0].use_responses_api is False
     assert constructed[0].root_async_client.is_closed()

@@ -20,6 +20,7 @@ test("探索星图可以浏览、缩放与切换，不会创建或修改真实�
   await page.getByRole("button", { name: "探索星图", exact: true }).click();
   const graph = page.locator(".memory-graph");
   await expect(graph).toContainText("体验模式 · 不写入记忆库");
+  await graph.getByRole("button", { name: "二维图谱", exact: true }).click();
   await expect(graph.locator(".graph-node")).toHaveCount(14);
   const canvas = graph.locator("svg[viewBox]");
   const before = await canvas.locator(":scope > g").last().getAttribute("transform");

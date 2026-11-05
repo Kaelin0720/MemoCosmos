@@ -59,6 +59,8 @@ class AgentStatus(BaseModel):
     has_api_key: bool = False
     source: Literal["file", "env", "none"] = "none"
     reason: str | None = "model_not_configured"
-    tools: list[str] = Field(default_factory=lambda: ["list_tags", "search_memory", "read_note"])
+    tools: list[str] = Field(
+        default_factory=lambda: ["list_tags", "search_memory", "read_note", "explore_memory_graph"]
+    )
     context_max_chars: int = 32000
     context_max_turns: int = 12

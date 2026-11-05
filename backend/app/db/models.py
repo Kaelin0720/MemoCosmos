@@ -263,6 +263,10 @@ class MemoryJobItem(Base):
 
 class MemoryRelation(Base):
     __tablename__ = "memory_relations"
+    __table_args__ = (
+        Index("ix_memory_relations_source_active", "source", "active"),
+        Index("ix_memory_relations_target_active", "target", "active"),
+    )
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
     source: Mapped[str] = mapped_column(ForeignKey("notes.id"), nullable=False)
     target: Mapped[str] = mapped_column(ForeignKey("notes.id"), nullable=False)
@@ -274,3 +278,18 @@ class MemoryRelation(Base):
     source_message_id: Mapped[str | None] = mapped_column(ForeignKey("messages.id"))
     active: Mapped[bool] = mapped_column(nullable=False, default=True)
     created_at: Mapped[str] = mapped_column(String(32), nullable=False)
+
+
+class ExternalTurn(Base):
+    __tablename__ = "external_turns"
+    __table_args__ = (
+        UniqueConstraint("source", "session_id", "turn_id", name="uq_external_turn_identity"),
+    )
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    source: Mapped[str] = mapped_column(String(64), nullable=False)
+    session_id: Mapped[str] = mapped_column(String(200), nullable=False)
+    turn_id: Mapped[str] = mapped_column(String(200), nullable=False)
+    run_id: Mapped[str] = mapped_column(ForeignKey("agent_runs.id"), unique=True, nullable=False)
+    content_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    truncated: Mapped[bool] = mapped_column(nullable=False, default=False)
+    captured_at: Mapped[str] = mapped_column(String(32), nullable=False)

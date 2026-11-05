@@ -31,6 +31,8 @@ def search(
     limit: int = Query(8, ge=1, le=20),
     date_from: str | None = None,
     date_to: str | None = None,
+    max_hops: int = Query(0, ge=0, le=0, deprecated=True),
+    token_budget: int = Query(2600, ge=100, le=6000),
 ):
     try:
         tags = [str(UUID(v)) for v in tag_ids.split(",")] if tag_ids else []
@@ -44,7 +46,7 @@ def search(
             raise ValueError("invalid date range")
     except ValueError:
         raise ApiError(422, "validation_error", "标签或日期范围格式不正确") from None
-    return request.app.state.knowledge.search(q, tags, limit, date_from, date_to)
+    return request.app.state.knowledge.search(q, tags, limit, date_from, date_to, token_budget)
 
 
 @router.get("/graph")

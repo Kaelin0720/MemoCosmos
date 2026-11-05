@@ -34,7 +34,7 @@ class Settings:
     memory_dir: Path
     config_dir: Path | None = None
     run_timeout_seconds: float = 120
-    agent_max_steps: int = 12
+    agent_max_steps: int = 30
     output_max_chars: int = 20000
 
     @classmethod
@@ -45,7 +45,7 @@ class Settings:
             Path(value).expanduser() if value else default_memory_dir(),
             Path(config).expanduser() if config else default_config_dir(),
             run_timeout_seconds=float(os.environ.get("RUN_TIMEOUT_SECONDS", "120")),
-            agent_max_steps=int(os.environ.get("AGENT_MAX_STEPS", "12")),
+            agent_max_steps=int(os.environ.get("AGENT_MAX_STEPS", "30")),
         )
 
     def validate_limits(self) -> None:

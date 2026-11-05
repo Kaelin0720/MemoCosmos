@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME_FILES = {
+    "CHANGELOG.md",
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
     "README.md",
@@ -19,6 +20,7 @@ RUNTIME_FILES = {
     ".env.example",
     "run.py",
     "preview_server.py",
+    "plugin.py",
     "backend/.python-version",
     "backend/alembic.ini",
     "backend/pyproject.toml",
@@ -27,9 +29,11 @@ RUNTIME_FILES = {
     "docs/usage.md",
     "docs/configuration.md",
     "docs/troubleshooting.md",
+    "docs/plugins.md",
     "docs/en/usage.md",
     "docs/en/configuration.md",
     "docs/en/troubleshooting.md",
+    "docs/en/plugins.md",
 }
 RUNTIME_PREFIXES = ("backend/app/", "backend/migrations/")
 
@@ -60,7 +64,9 @@ def build(root: Path, destination: Path, tracked: list[str] | None = None) -> Pa
         raise ValueError(f"Missing tracked runtime files: {', '.join(sorted(missing))}")
     files = [root / name for name in names]
     files += sorted(
-        path for path in (root / "frontend/out").rglob("*") if path.is_file()
+        path
+        for path in (root / "frontend/out").rglob("*")
+        if path.is_file() and path.suffix.lower() not in {".md", ".markdown", ".mdx"}
     )
     if any(path.is_symlink() for path in files):
         raise ValueError("Runtime packages cannot contain symbolic links")

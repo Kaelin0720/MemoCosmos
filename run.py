@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 API_URL = "http://127.0.0.1:8000"
 APP_URL = "http://127.0.0.1:3000"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 
 def port_available(port: int) -> bool:

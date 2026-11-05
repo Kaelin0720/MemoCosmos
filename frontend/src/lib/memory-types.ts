@@ -31,9 +31,24 @@ export type MemoryHit = {
   heading: string;
   excerpt: string;
   score: number;
+  hop?: number;
+  matched_by?: string;
+  path?: { note_id: string; title: string; relation: string | null }[];
 };
 export type MemoryGraph = {
-  nodes: { id: string; title: string; folder: string; tags: NoteSummary["tags"] }[];
+  nodes: {
+    id: string;
+    title: string;
+    folder: string;
+    tags: NoteSummary["tags"];
+    weight?: number;
+    parent_id?: string | null;
+    region_id?: string;
+    kind?: "star" | "planet" | "moon";
+    depth?: number;
+    has_knowledge?: boolean;
+    version?: number;
+  }[];
   edges: {
     id: string;
     source: string;
@@ -42,7 +57,11 @@ export type MemoryGraph = {
     evidence: string;
     source_message_id: string | null;
     created_at: string;
+    kind?: string;
+    weight?: number;
   }[];
+  regions?: { id: string; label: string; root_id: string; node_ids: string[] }[];
+  truncated?: boolean;
 };
 const date = (value: unknown) => typeof value === "string" && Number.isFinite(Date.parse(value));
 const tags = (value: unknown): value is NoteSummary["tags"] =>
@@ -128,6 +147,23 @@ export function parseSearch(value: unknown): {
       tags: item.tags,
       version: Number(item.version),
       score: item.score,
+      hop: typeof item.hop === "number" ? item.hop : undefined,
+      matched_by: typeof item.matched_by === "string" ? item.matched_by : undefined,
+      path: Array.isArray(item.path)
+        ? item.path
+            .filter(
+              (step) =>
+                isRecord(step) &&
+                isUuid(step.note_id) &&
+                typeof step.title === "string" &&
+                (step.relation === null || typeof step.relation === "string"),
+            )
+            .map((step) => ({
+              note_id: String(step.note_id),
+              title: String(step.title),
+              relation: step.relation as string | null,
+            }))
+        : undefined,
     };
   });
   if (items.reduce((length, item) => length + Array.from(item.excerpt).length, 0) > 8000)
@@ -152,7 +188,22 @@ export function parseGraph(value: unknown): MemoryGraph {
       !tags(node.tags)
     )
       throw new Error("关系节点格式不正确。");
-    return { id: node.id, title: node.title, folder: node.folder, tags: node.tags };
+    return {
+      id: node.id,
+      title: node.title,
+      folder: node.folder,
+      tags: node.tags,
+      weight:
+        typeof node.weight === "number" && Number.isFinite(node.weight) ? node.weight : undefined,
+      parent_id: node.parent_id === null || isUuid(node.parent_id) ? node.parent_id : undefined,
+      region_id: typeof node.region_id === "string" ? node.region_id : undefined,
+      kind: ["star", "planet", "moon"].includes(String(node.kind))
+        ? (node.kind as "star" | "planet" | "moon")
+        : undefined,
+      depth: Number.isSafeInteger(node.depth) ? Number(node.depth) : undefined,
+      has_knowledge: node.has_knowledge === true,
+      version: Number.isSafeInteger(node.version) ? Number(node.version) : undefined,
+    };
   });
   const edges = value.edges.map((edge) => {
     if (
@@ -174,7 +225,31 @@ export function parseGraph(value: unknown): MemoryGraph {
       evidence: edge.evidence,
       source_message_id: edge.source_message_id as string | null,
       created_at: String(edge.created_at),
+      kind: typeof edge.kind === "string" ? edge.kind : undefined,
+      weight:
+        typeof edge.weight === "number" && Number.isFinite(edge.weight) ? edge.weight : undefined,
     };
   });
-  return { nodes, edges };
+  const ids = new Set(nodes.map((node) => node.id));
+  if (edges.some((edge) => !ids.has(edge.source) || !ids.has(edge.target)))
+    throw new Error("关系图包含不存在的节点。");
+  const regions = Array.isArray(value.regions)
+    ? value.regions
+        .filter(
+          (region) =>
+            isRecord(region) &&
+            typeof region.id === "string" &&
+            typeof region.label === "string" &&
+            ids.has(String(region.root_id)) &&
+            Array.isArray(region.node_ids) &&
+            region.node_ids.every((id) => typeof id === "string" && ids.has(id)),
+        )
+        .map((region) => ({
+          id: String(region.id),
+          label: String(region.label),
+          root_id: String(region.root_id),
+          node_ids: region.node_ids as string[],
+        }))
+    : undefined;
+  return { nodes, edges, regions, truncated: value.truncated === true };
 }

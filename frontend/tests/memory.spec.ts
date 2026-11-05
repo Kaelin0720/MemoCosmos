@@ -239,6 +239,7 @@ test("关联文档跨筛选跳转、选中目录和浏览器返回，保留未�
 });
 
 test("星图选择、证据、键盘移动、拖拽、缩放和减少动画", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("memocosmos.graph-view", "2d"));
   const first = fixtureNote(),
     second = fixtureNote("项目 A");
   await mockNotes(page, [first, second]);

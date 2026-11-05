@@ -19,7 +19,7 @@ def test_database_and_ids_survive_restart_while_token_rotates(tmp_path):
     with sqlite3.connect(settings.database_path()) as connection:
         assert (
             connection.execute("SELECT version_num FROM alembic_version").fetchone()[0]
-            == "0004_second_brain"
+            == "0006_external_turns"
         )
         assert connection.execute("SELECT count(*) FROM tags").fetchone()[0] == 1
 

@@ -40,7 +40,7 @@ def test_populated_stage_one_database_upgrades_without_changing_tags(tmp_path):
             assert connection.exec_driver_sql("PRAGMA foreign_key_check").all() == []
             assert (
                 connection.exec_driver_sql("SELECT version_num FROM alembic_version").scalar()
-                == "0004_second_brain"
+                == "0006_external_turns"
             )
     finally:
         engine.dispose()

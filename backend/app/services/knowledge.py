@@ -220,202 +220,75 @@ class KnowledgeService:
             except ApiError:
                 continue
 
-    def search(self, q=None, tag_ids=None, limit=8, date_from=None, date_to=None):
-        self.ensure_index()
-        from app.db.models import NoteTag
-        from app.services.notes import tags_for
+    def search(
+        self,
+        q=None,
+        tag_ids=None,
+        limit=8,
+        date_from=None,
+        date_to=None,
+        token_budget=2600,
+    ):
+        from app.services.retrieval import DocumentRetriever
 
-        needle = (q or "").strip().casefold()
-        tokens = set(re.findall(r"[a-z0-9_]+|[\u4e00-\u9fff]{1,}", needle))
-        for token in list(tokens):
-            if re.fullmatch(r"[\u4e00-\u9fff]{3,}", token):
-                tokens.update(token[i : i + 2] for i in range(len(token) - 1))
-        tokens = sorted(tokens)[:100]
-        score = 1
-        matches = []
-        for token in tokens:
-            title_match = func.instr(Note.normalized_title, token) > 0
-            heading_match = func.instr(func.unicode_casefold(NoteSection.heading), token) > 0
-            body_match = func.instr(func.unicode_casefold(NoteSection.body), token) > 0
-            matches.extend([title_match, heading_match, body_match])
-            score = (
-                score
-                + case((title_match, 12), else_=0)
-                + case((heading_match, 6), else_=0)
-                + case((body_match, 2), else_=0)
-            )
-        statement = (
-            select(Note, NoteSection)
-            .join(NoteSection, NoteSection.note_id == Note.id)
-            .where(Note.sync_status == "synced", NoteSection.version == Note.version)
-        )
-        if tokens:
-            statement = statement.where(or_(*matches))
-        for tag_id in tag_ids or []:
-            statement = statement.where(
-                Note.id.in_(select(NoteTag.note_id).where(NoteTag.tag_id == tag_id))
-            )
-        selected_date = func.coalesce(NoteSection.event_date, NoteSection.recorded_date)
-        selected_end = func.coalesce(NoteSection.event_end_date, selected_date)
-        if date_from:
-            statement = statement.where(selected_end >= date_from)
-        if date_to:
-            statement = statement.where(selected_date <= date_to)
-        with self.sessions() as session:
-            total = session.scalar(select(func.count()).select_from(statement.subquery()))
-            total_notes = session.scalar(
-                select(func.count()).select_from(Note).where(Note.sync_status == "synced")
-            )
-            indexed = session.scalar(
-                select(func.count(func.distinct(NoteSection.note_id)))
-                .join(Note, Note.id == NoteSection.note_id)
-                .where(Note.sync_status == "synced", Note.version == NoteSection.version)
-            )
-            rows = list(
-                session.execute(
-                    statement.order_by(
-                        score.desc() if tokens else Note.created_at.desc(),
-                        Note.id,
-                        NoteSection.position,
-                    ).limit(1000)
-                )
-            )
-            direct = {note.id for note, _ in rows}
-            if tokens and direct:
-                adjacent = set()
-                for edge in session.scalars(
-                    select(MemoryRelation)
-                    .where(
-                        MemoryRelation.active.is_(True),
-                        or_(MemoryRelation.source.in_(direct), MemoryRelation.target.in_(direct)),
-                    )
-                    .limit(500)
-                ):
-                    adjacent.add(edge.source)
-                    adjacent.add(edge.target)
-                adjacent -= direct
-                neighbors = (
-                    select(Note, NoteSection)
-                    .join(NoteSection, NoteSection.note_id == Note.id)
-                    .where(
-                        Note.id.in_(adjacent),
-                        Note.sync_status == "synced",
-                        NoteSection.version == Note.version,
-                    )
-                )
-                for tag_id in tag_ids or []:
-                    neighbors = neighbors.where(
-                        Note.id.in_(select(NoteTag.note_id).where(NoteTag.tag_id == tag_id))
-                    )
-                if date_from:
-                    neighbors = neighbors.where(selected_end >= date_from)
-                if date_to:
-                    neighbors = neighbors.where(selected_date <= date_to)
-                extra = list(session.execute(neighbors.limit(20)))
-                rows.extend(extra)
-                total += len(extra)
-            result, budget, excluded, inspected = [], 8000, 0, set()
-            pending = {}
-            for note, section in rows[: limit + 20]:
-                if len(result) >= limit:
-                    break
-                try:
-                    if note.id not in inspected:
-                        current = self.notes.get(note.id)
-                        if current.version != note.version:
-                            raise ApiError(409, "note_changed", "笔记已变化")
-                        inspected.add(note.id)
-                except ApiError:
-                    excluded += 1
-                    continue
-                content = section.body
-                at = next(
-                    (content.casefold().find(t) for t in tokens if t in content.casefold()), 0
-                )
-                excerpt = content[max(0, at - 120) : max(0, at - 120) + min(1200, budget)]
-                budget -= len(excerpt)
-                relevance = (
-                    sum(
-                        12 * (t in note.title.casefold())
-                        + 6 * (t in section.heading.casefold())
-                        + 2 * (t in content.casefold())
-                        for t in tokens
-                    )
-                    or 1
-                )
-                if note.id not in pending:
-                    pending[note.id] = self.pending_changes(note.id, note.title, note.version)
-                result.append(
-                    dict(
-                        note_id=note.id,
-                        title=note.title,
-                        folder=note.folder,
-                        tags=tags_for(session, note.id),
-                        version=note.version,
-                        heading=section.heading,
-                        excerpt=excerpt,
-                        score=relevance,
-                        date=section.event_date or section.recorded_date,
-                        date_to=section.event_end_date or section.recorded_date,
-                        date_basis="发生日期"
-                        if section.event_date
-                        else "记录日期（未说明发生日期）",
-                        **pending[note.id],
-                    )
-                )
-            return dict(
-                items=result,
-                total=max(len(result), total - excluded),
-                truncated=total > len(result) or total > 1000 or total_notes > indexed,
-                pending_changes_detected=any(item["has_pending_changes"] for item in result),
-                coverage={
-                    "indexed_notes": indexed,
-                    "total_notes": total_notes,
-                    "unindexed_notes": total_notes - indexed,
-                    "matched_sections": total,
-                    "date_basis": "明确发生日期或标注的记录日期",
-                },
-            )
+        return DocumentRetriever(self).search(q, tag_ids, limit, date_from, date_to, token_budget)
 
     def graph(self, q=None, tag_id=None):
         self.ensure_index()
         summaries = self.notes.list(q=q, tag_id=tag_id).items
-        valid = set()
+        valid = {}
         for note in summaries[:200]:
             try:
-                self.notes.get(note.id)
-                valid.add(note.id)
+                valid[note.id] = self.notes.get(note.id)
             except ApiError:
                 continue
+        from app.services.graph_context import has_knowledge
+
         nodes = [
-            dict(id=n.id, title=n.title, folder=n.folder, tags=[t.model_dump() for t in n.tags])
+            dict(
+                id=n.id,
+                title=n.title,
+                folder=n.folder,
+                tags=[t.model_dump() for t in n.tags],
+                has_knowledge=has_knowledge(valid[n.id].body),
+                version=valid[n.id].version,
+            )
             for n in summaries
             if n.sync_status == "synced" and n.id in valid
         ][:200]
         ids = {n["id"] for n in nodes}
+        from app.services.graph_layout import enrich_graph
+        from app.services.retrieval import confirmed_edges
+
         with self.sessions() as session:
             current = {
                 n.id: n.version for n in session.scalars(select(Note).where(Note.id.in_(ids)))
             }
+            edge_rows = list(
+                session.scalars(
+                    confirmed_edges()
+                    .where(MemoryRelation.source.in_(ids), MemoryRelation.target.in_(ids))
+                    .order_by(MemoryRelation.id)
+                    .limit(501)
+                )
+            )
             edges = [
                 dict(
                     id=e.id,
                     source=e.source,
                     target=e.target,
                     relation=e.relation,
+                    kind=e.kind,
+                    weight=0.95 if e.kind == "fact" else 0.8,
                     evidence=f"{e.evidence}（来源版本 {e.source_version}，"
                     f"目标版本 {e.target_version}）",
                     source_message_id=e.source_message_id,
                     created_at=e.created_at,
                 )
-                for e in session.scalars(
-                    select(MemoryRelation)
-                    .where(MemoryRelation.active.is_(True))
-                    .order_by(MemoryRelation.id)
-                )
+                for e in edge_rows
                 if e.source in ids
                 and e.target in ids
                 and current[e.source] == e.source_version
                 and current[e.target] == e.target_version
             ][:500]
-        return dict(nodes=nodes, edges=edges)
+        return enrich_graph(nodes, edges, len(summaries) > len(nodes) or len(edge_rows) > 500)
