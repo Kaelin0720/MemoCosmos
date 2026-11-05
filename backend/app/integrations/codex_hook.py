@@ -17,6 +17,8 @@ MAX_INPUT = 2 * 1024 * 1024
 
 class CaptureQueue:
     def __init__(self, directory):
+        if os.name != "posix" or not hasattr(os, "O_NOFOLLOW"):
+            raise ValueError("Capture requires POSIX private-file storage; use WSL2 on Windows")
         directory = Path(directory)
         if directory.is_symlink():
             raise ValueError("Capture directory cannot be a symbolic link")

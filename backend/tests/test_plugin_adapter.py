@@ -165,6 +165,10 @@ def test_generated_plugin_runs_from_an_unrelated_working_directory(tmp_path):
 
     asyncio.run(scenario())
 
+
+@pytest.mark.posix_storage
+def test_generated_capture_launcher_runs_from_an_unrelated_working_directory(tmp_path):
+    directory = generate(tmp_path / "插件 with spaces", "http://127.0.0.1:1")
     environment = dict(os.environ)
     environment.pop("PYTHONPATH", None)
     result = subprocess.run(
@@ -184,6 +188,14 @@ def test_generated_plugin_runs_from_an_unrelated_working_directory(tmp_path):
     )
     assert result.returncode == 0, result.stderr
     assert json.loads(result.stdout)["pending"] == 0
+
+
+def test_capture_rejects_unsupported_private_storage_before_creating_files(tmp_path, monkeypatch):
+    monkeypatch.delattr(os, "O_NOFOLLOW", raising=False)
+    directory = tmp_path / "capture"
+    with pytest.raises(ValueError, match="POSIX.*WSL2"):
+        CaptureQueue(directory)
+    assert not directory.exists()
 
 
 @pytest.mark.skipif(shutil.which("codex") is None, reason="Codex CLI is not installed")
