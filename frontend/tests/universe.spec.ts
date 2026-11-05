@@ -62,15 +62,17 @@ test("真实文档构成立体星域，材质与星环可切换，刷新保留�
   await dialog.getByRole("button", { name: "发光晶体", exact: true }).click();
   await expect(dialog.locator(".celestial-style-tile")).toHaveCount(5);
   await expect
-    .poll(() =>
-      dialog
-        .locator(".celestial-style-tile canvas")
-        .first()
-        .evaluate((element) =>
-          Array.from(
-            (element as HTMLCanvasElement).getContext("2d")!.getImageData(0, 0, 128, 128).data,
-          ).some((value) => value > 0),
-        ),
+    .poll(
+      () =>
+        dialog
+          .locator(".celestial-style-tile canvas")
+          .first()
+          .evaluate((element) =>
+            Array.from(
+              (element as HTMLCanvasElement).getContext("2d")!.getImageData(0, 0, 128, 128).data,
+            ).some((value) => value > 0),
+          ),
+      { timeout: 15000 },
     )
     .toBe(true);
   await dialog.getByRole("button", { name: "极光行星", exact: true }).click();

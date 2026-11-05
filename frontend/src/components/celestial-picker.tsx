@@ -26,9 +26,11 @@ function Thumbnail({
   const canvas = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     let raf = 0;
+    const deadline = performance.now() + 10000;
     const draw = () => {
       const image = renderer(kind, surface);
       if (image) canvas.current?.getContext("2d")?.drawImage(image, 0, 0);
+      else if (performance.now() < deadline) raf = requestAnimationFrame(draw);
     };
     raf = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(raf);

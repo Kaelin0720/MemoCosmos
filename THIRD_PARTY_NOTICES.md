@@ -3477,7 +3477,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @next/env · 16.4.0
+## @next/env · 16.4.3
 
 License: MIT
 
@@ -3487,7 +3487,7 @@ Attribution: Next.js Team
 
 Refer to the upstream distribution for its license text.
 
-## @next/swc-darwin-arm64 · 16.4.0
+## @next/swc-darwin-arm64 · 16.4.3
 
 License: MIT
 
@@ -7240,7 +7240,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## next · 16.4.0
+## next · 16.4.3
 
 License: MIT
 

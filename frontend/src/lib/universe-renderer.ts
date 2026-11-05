@@ -883,6 +883,9 @@ export class UniverseRenderer {
     this.renderer.readRenderTargetPixels(this.previewTarget, 0, 0, 128, 128, this.previewPixels);
     this.renderer.setRenderTarget(old);
     this.renderer.setClearColor(color, alpha);
+    // Parallel shader compilation can leave the first preview transparent.
+    // Retry on a later frame instead of permanently caching an empty image.
+    if (!this.previewPixels.some((value, index) => index % 4 === 3 && value > 0)) return null;
     const output = document.createElement("canvas");
     output.width = output.height = 128;
     const context = output.getContext("2d")!,

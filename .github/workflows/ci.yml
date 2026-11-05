@@ -90,3 +90,13 @@ jobs:
         run: pnpm build
       - name: Verify release package
         run: uv run --project ../backend --no-sync python ../tools/package_release.py
+      - name: Save verified runtime package
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: MemoCosmos-runtime
+          path: |
+            artifacts/releases/MemoCosmos-*.zip
+            artifacts/releases/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
