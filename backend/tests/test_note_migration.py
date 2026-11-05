@@ -88,7 +88,7 @@ def test_0003_upgrade_preserves_all_tag_conversation_message_run_fields(tmp_path
             assert connection.exec_driver_sql("PRAGMA foreign_key_check").all() == []
             assert (
                 connection.exec_driver_sql("SELECT version_num FROM alembic_version").scalar()
-                == "0004_second_brain"
+                == "0006_external_turns"
             )
             for table in ("notes", "note_tags", "note_writes"):
                 assert connection.exec_driver_sql(f"SELECT count(*) FROM {table}").scalar() == 0

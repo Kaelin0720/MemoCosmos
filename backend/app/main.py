@@ -15,6 +15,7 @@ from starlette.exceptions import HTTPException
 from app.agent.main_agent import ModelFactory, disable_sdk_logging
 from app.api.v1.agent import router as agent_router
 from app.api.v1.conversations import router as conversation_router
+from app.api.v1.integrations import router as integrations_router
 from app.api.v1.memory import router as memory_router
 from app.api.v1.notes import router as note_router
 from app.api.v1.tags import router as tag_router
@@ -24,10 +25,12 @@ from app.core.security import LocalBoundaryMiddleware
 from app.core.settings import DEVELOPMENT_ORIGINS, Settings
 from app.db.session import build_engine, run_migrations
 from app.services.conversations import RunManager, interrupt_stale_runs
+from app.services.external_memory import ExternalMemory
 from app.services.knowledge import KnowledgeService
 from app.services.memory_archive import MemoryArchive
 from app.services.memory_jobs import MemoryJobs
 from app.services.notes import NoteService
+from app.services.recall_sessions import RecallSessions
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -64,6 +67,8 @@ def create_app(
                 memory_planner,
             )
             application.state.memory_jobs = memory_jobs
+            application.state.external_memory = ExternalMemory(memory_jobs)
+            application.state.recall_sessions = RecallSessions(application.state.knowledge)
             application.state.memory_archive = MemoryArchive(
                 selected, application.state.note_service, application.state.model_config_store
             )
@@ -90,7 +95,7 @@ def create_app(
                 await memory_jobs.close()
             engine.dispose()
 
-    application = FastAPI(title="MemoCosmos · 第二大脑", version="1.0.0", lifespan=lifespan)
+    application = FastAPI(title="MemoCosmos · 第二大脑", version="1.0.1", lifespan=lifespan)
     application.add_middleware(
         CORSMiddleware,
         allow_origins=list(DEVELOPMENT_ORIGINS),
@@ -147,6 +152,7 @@ def create_app(
     application.include_router(conversation_router)
     application.include_router(note_router)
     application.include_router(memory_router)
+    application.include_router(integrations_router)
     return application
 
 

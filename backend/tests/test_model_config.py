@@ -25,7 +25,7 @@ def test_missing_configuration_does_not_stop_tags(client, token_headers, monkeyp
         "has_api_key": False,
         "source": "none",
         "reason": "model_not_configured",
-        "tools": ["list_tags", "search_memory", "read_note"],
+        "tools": ["list_tags", "search_memory", "read_note", "explore_memory_graph"],
         "context_max_chars": 32000,
         "context_max_turns": 12,
     }

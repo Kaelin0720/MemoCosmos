@@ -40,17 +40,17 @@ Set `YIHE_MEMORY_DIR` and `YIHE_CONFIG_DIR` to separate absolute directories out
 
 The settings page is recommended. Automated launches can use process environment variables:
 
-| Variable              | Meaning                                                   |
-| --------------------- | --------------------------------------------------------- |
-| `CHAT_MODEL_BASE_URL` | Provider API base URL                                     |
-| `CHAT_MODEL_NAME`     | Exact model ID                                            |
-| `CHAT_MODEL_API_KEY`  | API Key                                                   |
-| `CHAT_MODEL_PROVIDER` | `openai_compatible`; `openai` is also accepted            |
-| `YIHE_MEMORY_DIR`     | Absolute vault path                                       |
-| `YIHE_CONFIG_DIR`     | Absolute private configuration directory                  |
-| `YIHE_TIMEZONE`       | Optional IANA timezone; otherwise the computer's timezone |
-| `RUN_TIMEOUT_SECONDS` | Chat timeout, default 120; greater than 0 and at most 600 |
-| `AGENT_MAX_STEPS`     | Maximum agent steps, default 12; accepted range 1–50      |
+| Variable              | Meaning                                                                                                           |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `CHAT_MODEL_BASE_URL` | Provider API base URL                                                                                             |
+| `CHAT_MODEL_NAME`     | Exact model ID                                                                                                    |
+| `CHAT_MODEL_API_KEY`  | API Key                                                                                                           |
+| `CHAT_MODEL_PROVIDER` | `openai_compatible`; `openai` is also accepted                                                                    |
+| `YIHE_MEMORY_DIR`     | Absolute vault path                                                                                               |
+| `YIHE_CONFIG_DIR`     | Absolute private configuration directory                                                                          |
+| `YIHE_TIMEZONE`       | Optional IANA timezone; otherwise the computer's timezone                                                         |
+| `RUN_TIMEOUT_SECONDS` | Chat timeout, default 120; greater than 0 and at most 600                                                         |
+| `AGENT_MAX_STEPS`     | Execution steps, default 30; range 1–50. Includes model and tool steps; memory reads remain capped at 12 per turn |
 
 You can set these in PyCharm's run configuration. `.env.example` lists the supported variables; the backend does **not automatically load `.env` files**.
 

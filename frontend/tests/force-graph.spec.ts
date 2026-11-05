@@ -3,10 +3,15 @@ import { fixtureNote, mockNotes } from "./notes-fixture";
 import { mockMemory } from "./memory-fixture";
 import type { Page } from "./test";
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("memocosmos.graph-view", "2d"));
+});
+
 async function explore(page: Page) {
   await mockNotes(page);
   await mockMemory(page);
   await page.goto("/knowledge/?view=graph&mode=explore");
+  await page.getByRole("button", { name: "二维图谱", exact: true }).click();
   const canvas = page.locator(".force-graph");
   await canvas.scrollIntoViewIfNeeded();
   await expect(canvas).toHaveAttribute("data-motion-state", "moving");

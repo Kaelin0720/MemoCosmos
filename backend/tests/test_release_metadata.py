@@ -14,9 +14,9 @@ def test_release_metadata_and_official_locked_registry():
     project = tomllib.loads((root / "pyproject.toml").read_text())
     lock = tomllib.loads((root / "uv.lock").read_text())
     assert project["project"]["name"] == "memocosmos-backend"
-    assert project["project"]["version"] == "1.0.0"
+    assert project["project"]["version"] == "1.0.1"
     assert project["project"]["license"] == "MIT"
-    assert create_app().version == "1.0.0"
+    assert create_app().version == "1.0.1"
     assert create_app().title.startswith("MemoCosmos")
     assert all(
         index["url"] == "https://pypi.org/simple" for index in project["tool"]["uv"]["index"]

@@ -95,7 +95,7 @@ def test_hallucinated_host_tools_are_refused(tmp_path, name):
         final = finished(client, headers, run["id"])
         assert final["status"] == "failed"
         assert all(
-            set(names) == {"list_tags", "search_memory", "read_note"}
+            set(names) == {"list_tags", "search_memory", "read_note", "explore_memory_graph"}
             for names in model._bound_names
         )
         items = client.get(

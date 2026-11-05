@@ -22,7 +22,8 @@ from app.services.notes import document_prefix
 from app.vault.topic_files import digest
 
 MAX_ARCHIVE = 100 * 1024 * 1024
-HEAD = "0004_second_brain"
+HEAD = "0006_external_turns"
+SUPPORTED_HEADS = ("0004_second_brain", "0005_relation_indexes", HEAD)
 
 
 class MemoryArchive:
@@ -139,7 +140,7 @@ class MemoryArchive:
             manifest = json.loads(files.pop("manifest.json"))
             if (
                 manifest.get("format_version") != 1
-                or manifest.get("database_version") != HEAD
+                or manifest.get("database_version") not in SUPPORTED_HEADS
                 or set(manifest["files"]) != set(files)
             ):
                 raise ValueError("manifest mismatch")
@@ -157,6 +158,8 @@ class MemoryArchive:
                         "SELECT name,type,sql FROM sqlite_master WHERE name NOT LIKE 'sqlite_%'"
                     ).fetchall()
                     expected = set(Base.metadata.tables) | {"alembic_version"}
+                    if manifest["database_version"] != HEAD:
+                        expected -= {"external_turns"}
                     actual = {name for name, kind, _ in objects if kind == "table"}
                     if actual != expected or any(
                         kind not in ("table", "index") or (sql and "VIRTUAL TABLE" in sql.upper())
@@ -164,13 +167,15 @@ class MemoryArchive:
                     ):
                         raise ValueError("invalid schema")
                     for name, table in Base.metadata.tables.items():
+                        if name not in expected:
+                            continue
                         columns = {
                             row[1] for row in connection.execute(f'PRAGMA table_info("{name}")')
                         }
                         if columns != set(table.columns.keys()):
                             raise ValueError("invalid columns")
                     if connection.execute("SELECT version_num FROM alembic_version").fetchall() != [
-                        (HEAD,)
+                        (manifest["database_version"],)
                     ]:
                         raise ValueError("unsupported migration")
                     if (

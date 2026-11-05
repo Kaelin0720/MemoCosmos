@@ -99,6 +99,11 @@ export function MemorySearch({
             {hit.version}
           </span>
           <p>{hit.excerpt}</p>
+          {hit.path && hit.path.length > 1 && (
+            <span className="memory-hit-path">
+              {t("联想路径")} · {hit.path.map((step) => step.title).join(" › ")}
+            </span>
+          )}
         </ActionButton>
       ))}
       {truncated && <p className="notes-hint">{t("结果已按摘录预算截取，请打开原文阅读。")}</p>}
