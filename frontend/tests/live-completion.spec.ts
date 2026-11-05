@@ -138,6 +138,7 @@ test("完整真实临时库：聊天自动整理、目录编辑链接、星图�
       .click();
     await expect(page.locator(".note-reader")).toContainText("实验思路");
     await page.getByRole("button", { name: "关系星图", exact: true }).click();
+    await page.getByRole("button", { name: "二维图谱", exact: true }).click();
     await page.getByRole("button", { name: "暂停运动", exact: true }).click();
     await page.getByRole("button", { name: "选择节点 Redis 缓存", exact: true }).click();
     await page.locator(".graph-relation").first().click();

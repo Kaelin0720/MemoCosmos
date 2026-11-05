@@ -52,11 +52,13 @@ artifacts/
 !/docs/usage.md
 !/docs/configuration.md
 !/docs/troubleshooting.md
+!/docs/plugins.md
 !/docs/en/
 /docs/en/*
 !/docs/en/usage.md
 !/docs/en/configuration.md
 !/docs/en/troubleshooting.md
+!/docs/en/plugins.md
 /frontend/AGENTS.md
 /frontend/previews/
 /frontend/public/assets/README.md

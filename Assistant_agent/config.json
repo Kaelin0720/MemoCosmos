@@ -1,0 +1,8 @@
+{
+  "api_key": "你的deepseekkey",
+  "base_url": "https://api.deepseek.com",
+  "model": "deepseek-chat",
+  "temperature": 0.2,
+  "timeout_seconds": 60
+}
+

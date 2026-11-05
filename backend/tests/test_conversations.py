@@ -50,7 +50,8 @@ def test_real_deep_agents_stream_and_read_only_tag_tool(agent_client):
             body += data["delta"]
     assert body == events[-1][1]["message"]["content"] == "查到标签：RAG。"
     assert all(
-        set(names) == {"list_tags", "search_memory", "read_note"} for names in model._bound_names
+        set(names) == {"list_tags", "search_memory", "read_note", "explore_memory_graph"}
+        for names in model._bound_names
     )
     assert model._tool_results[0]["items"][0]["id"] == tag["id"]
     messages = client.get(f"/api/v1/conversations/{conversation}/messages", headers=headers).json()[

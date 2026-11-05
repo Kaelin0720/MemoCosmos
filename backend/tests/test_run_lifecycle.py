@@ -177,6 +177,7 @@ def test_actual_tool_table_has_no_files_execution_or_delegation(tmp_path):
                 "list_tags",
                 "search_memory",
                 "read_note",
+                "explore_memory_graph",
             }
             assert agent.checkpointer is None
             tool = make_tag_tool(app.state.session_factory)

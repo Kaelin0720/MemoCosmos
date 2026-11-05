@@ -1650,7 +1650,7 @@ body.cosmic-universe {
 }
 .cosmic-universe .force-graph-workspace .force-graph {
   width: 100%;
-  height: clamp(380px, calc(100dvh - 410px), 540px);
+  height: 100%;
   min-height: 0;
   touch-action: none;
   cursor: grab;
@@ -1658,8 +1658,441 @@ body.cosmic-universe {
     radial-gradient(ellipse at 35% 42%, #19376233, transparent 66%),
     radial-gradient(ellipse at 82% 12%, #252b5226, transparent 52%), #070c16;
 }
+.cosmic-universe .force-graph-workspace .graph-layout {
+  height: clamp(440px, calc(100dvh - 290px), 640px);
+}
+.cosmic-universe .force-graph-workspace .graph-details {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #a3bce366 transparent;
+}
 .force-graph:active {
   cursor: grabbing;
+}
+
+/* The universe and D3 share the same document graph and inspector. */
+.cosmic-universe .universe-region-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 0 12px;
+}
+.cosmic-universe .universe-region-tabs button {
+  padding: 6px 10px;
+  font-size: 12px;
+  color: #9db6d7;
+  border-radius: 7px;
+}
+.cosmic-universe .universe-region-tabs button[aria-pressed="true"] {
+  background: #223951;
+  color: #e6f1ff;
+}
+.cosmic-universe .graph-view-switch {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  background: #121d30;
+  border: 1px solid #b4c9ef24;
+  border-radius: 9px;
+}
+.cosmic-universe .graph-view-switch button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: #9eb0cb;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.cosmic-universe .graph-view-switch button[aria-pressed="true"] {
+  background: #2a3e5b;
+  color: #edf4ff;
+}
+.cosmic-universe .universe-scene {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #03060d;
+}
+.cosmic-universe .universe-scene > canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+.cosmic-universe .universe-scene > canvas:active {
+  cursor: grabbing;
+}
+.cosmic-universe .universe-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.cosmic-universe .universe-node-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: auto;
+  background: transparent;
+  border: 0;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #dbe8fb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 6px #000;
+  will-change: transform;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    opacity 0.2s;
+}
+.cosmic-universe .universe-node-label[hidden] {
+  display: none;
+}
+.cosmic-universe .universe-region-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: auto;
+  padding: 7px 10px;
+  color: #ddd9ce;
+  background: #090d16b0;
+  border: 0;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-size: 13px;
+  text-shadow: 0 1px 9px #000;
+  transition:
+    color 0.25s,
+    background 0.25s,
+    opacity 0.25s;
+}
+.cosmic-universe .universe-region-label[hidden] {
+  display: none;
+}
+.cosmic-universe .universe-region-label:hover {
+  color: #fff;
+  background: #172334;
+}
+.cosmic-universe .universe-node-label[data-knowledge="empty"] {
+  color: #7792ac;
+}
+.cosmic-universe .universe-node-label[data-knowledge="recorded"] {
+  color: #eee9da;
+}
+.cosmic-universe .atlas-breadcrumb {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #a5b2c0;
+  font-size: 12px;
+}
+.cosmic-universe .atlas-breadcrumb button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid #b7c3ce22;
+  border-radius: 5px;
+  background: #0c111b;
+  color: #c0cbd6;
+  transition:
+    background 0.25s,
+    transform 0.25s;
+}
+.cosmic-universe .atlas-breadcrumb button:hover {
+  background: #1a273a;
+}
+.cosmic-universe .atlas-breadcrumb button:active {
+  transform: scale(0.96);
+}
+.cosmic-universe .atlas-recorded,
+.cosmic-universe .atlas-empty {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.cosmic-universe .atlas-recorded::before,
+.cosmic-universe .atlas-empty::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ead9b3;
+  box-shadow: 0 0 9px #ead9b366;
+}
+.cosmic-universe .atlas-empty::before {
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid #6b8dab;
+}
+.cosmic-universe .atlas-document-status {
+  color: #cfbf98;
+  font-size: 12px;
+}
+.cosmic-universe .atlas-document-status[data-knowledge="empty"] {
+  color: #8198b1;
+}
+.cosmic-universe .graph-layout.atlas-navigating {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cosmic-universe .graph-details[hidden] {
+  display: none;
+}
+.cosmic-universe .universe-node-label:hover,
+.cosmic-universe .universe-node-label[aria-pressed="true"] {
+  background: #17273fea;
+  color: #fff;
+}
+.cosmic-universe .universe-node-label:focus-visible {
+  outline: 2px solid #b4d3ff;
+  outline-offset: 2px;
+}
+.cosmic-universe .universe-legend {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #96abc8;
+  font-size: 11px;
+  pointer-events: none;
+}
+.cosmic-universe .universe-loading {
+  position: absolute;
+  inset: 40% 15px auto;
+  text-align: center;
+  color: #9eb6d8;
+  font-size: 12px;
+}
+.cosmic-universe .universe-fallback {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.cosmic-universe .universe-fallback > p {
+  color: #b8cae7;
+  font-size: 12px;
+  margin: 8px 12px;
+}
+.cosmic-universe .universe-fallback .force-graph {
+  flex: 1;
+}
+.cosmic-universe .celestial-picker {
+  display: grid;
+  gap: 8px;
+  margin: 15px 0;
+}
+.cosmic-universe .celestial-picker label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+  color: #a3b8d6;
+}
+.cosmic-universe .celestial-picker select {
+  min-width: 0;
+  width: 100%;
+  border: 1px solid #b4c9ef24;
+  border-radius: 6px;
+  padding: 8px;
+  color: #e1ebfb;
+  background: #15243b;
+  font-size: 12px;
+}
+.cosmic-universe .celestial-library-button {
+  justify-content: flex-start;
+  gap: 7px;
+  width: 100%;
+  font-size: 12px;
+}
+.cosmic-universe .celestial-library-button > span {
+  margin-left: auto;
+  color: #98adcd;
+}
+.cosmic-universe .celestial-picker .celestial-ring-label {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.cosmic-universe .celestial-ring-label select {
+  flex: 1;
+  width: 0;
+}
+.cosmic-universe .celestial-family-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 12px 0 16px;
+}
+.cosmic-universe .celestial-family-filter button {
+  font-size: 12px;
+  padding: 7px 9px;
+  border-radius: 6px;
+  color: #a9bddb;
+}
+.cosmic-universe .celestial-family-filter button[aria-pressed="true"] {
+  background: #29415e;
+  color: #f2f7ff;
+}
+.cosmic-universe .celestial-library-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+.cosmic-universe .celestial-style-tile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  padding: 10px 5px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: #c2d4ed;
+  background: #101d30;
+  font-size: 12px;
+}
+.cosmic-universe .celestial-style-tile:hover {
+  background: #1b2d47;
+  border-color: #7fa8d955;
+}
+.cosmic-universe .celestial-style-tile[aria-pressed="true"] {
+  background: #223b5a;
+  border-color: #a4c5ef;
+}
+.cosmic-universe .celestial-style-tile canvas {
+  width: 84px;
+  height: 84px;
+  max-width: 100%;
+  object-fit: contain;
+}
+.cosmic-universe .celestial-library-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 11px;
+  color: #9ab1d0;
+}
+.cosmic-universe .celestial-library-pagination > div {
+  display: flex;
+  gap: 5px;
+}
+.cosmic-universe .graph-recall {
+  padding: 15px 0 3px;
+}
+.cosmic-universe .graph-recall > label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #a4bddf;
+  margin-bottom: 8px;
+}
+.cosmic-universe .graph-recall > div:not(.graph-recall-results) {
+  display: flex;
+  gap: 8px;
+}
+.cosmic-universe .graph-recall input {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  background: #101c2e;
+  border: 1px solid #a5bfe03b;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #e3ecfb;
+  font-size: 13px;
+}
+.cosmic-universe .graph-recall-results {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.cosmic-universe .graph-recall-results button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #13243b;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 12px;
+}
+.cosmic-universe .graph-recall-results button span {
+  font-size: 11px;
+  color: #92aacd;
+}
+.cosmic-universe .graph-recall-results p {
+  color: #9bb0cf;
+  font-size: 12px;
+}
+@media (max-width: 850px) {
+  .cosmic-universe .universe-scene {
+    height: clamp(340px, 52dvh, 500px);
+  }
+  .cosmic-universe .graph-mode-bar {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 550px) {
+  .cosmic-universe .universe-node-label {
+    font-size: 11px;
+  }
+  .cosmic-universe .universe-legend {
+    gap: 8px;
+    font-size: 11px;
+  }
+  .cosmic-universe .celestial-style-tile {
+    font-size: 11px;
+    gap: 4px;
+  }
+  .cosmic-universe .celestial-style-tile canvas {
+    width: 62px;
+    height: 62px;
+  }
+  .cosmic-universe .celestial-family-filter {
+    gap: 2px;
+  }
+  .cosmic-universe .celestial-family-filter button {
+    font-size: 11px;
+    padding: 7px 5px;
+  }
+  .cosmic-universe .graph-view-switch button {
+    font-size: 11px;
+  }
+  .cosmic-universe .celestial-picker select,
+  .cosmic-universe .graph-recall input {
+    font-size: 16px;
+  }
 }
 .force-graph .graph-starfield {
   fill: #d3e8ff;
@@ -1763,8 +2196,14 @@ body.cosmic-universe {
   font-size: 11px;
 }
 @media (max-width: 850px) {
+  .cosmic-universe .force-graph-workspace .graph-layout {
+    height: auto;
+  }
   .cosmic-universe .force-graph-workspace .force-graph {
-    height: 420px;
+    height: clamp(320px, 48dvh, 440px);
+  }
+  .cosmic-universe .force-graph-workspace .graph-details {
+    overflow: visible;
   }
 }
 

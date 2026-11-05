@@ -40,17 +40,17 @@ API URL 是基址，通常包含版本路径。程序会在其后调用 `chat/co
 
 推荐使用页面设置。自动运行等场景也可以使用进程环境变量：
 
-| 变量                  | 用途                                                  |
-| --------------------- | ----------------------------------------------------- |
-| `CHAT_MODEL_BASE_URL` | 模型服务的 API 基址                                   |
-| `CHAT_MODEL_NAME`     | 模型 ID                                               |
-| `CHAT_MODEL_API_KEY`  | API 密钥                                              |
-| `CHAT_MODEL_PROVIDER` | `openai_compatible`，也接受 `openai`                  |
-| `YIHE_MEMORY_DIR`     | 记忆库绝对路径                                        |
-| `YIHE_CONFIG_DIR`     | 私密配置目录绝对路径                                  |
-| `YIHE_TIMEZONE`       | 可选 IANA 时区，如 `Asia/Shanghai`；默认使用电脑时区  |
-| `RUN_TIMEOUT_SECONDS` | 聊天超时时间，默认 120 秒，可设大于 0 且不超过 600 秒 |
-| `AGENT_MAX_STEPS`     | 智能体步骤上限，默认 12，可设 1–50                    |
+| 变量                  | 用途                                                                                       |
+| --------------------- | ------------------------------------------------------------------------------------------ |
+| `CHAT_MODEL_BASE_URL` | 模型服务的 API 基址                                                                        |
+| `CHAT_MODEL_NAME`     | 模型 ID                                                                                    |
+| `CHAT_MODEL_API_KEY`  | API 密钥                                                                                   |
+| `CHAT_MODEL_PROVIDER` | `openai_compatible`，也接受 `openai`                                                       |
+| `YIHE_MEMORY_DIR`     | 记忆库绝对路径                                                                             |
+| `YIHE_CONFIG_DIR`     | 私密配置目录绝对路径                                                                       |
+| `YIHE_TIMEZONE`       | 可选 IANA 时区，如 `Asia/Shanghai`；默认使用电脑时区                                       |
+| `RUN_TIMEOUT_SECONDS` | 聊天超时时间，默认 120 秒，可设大于 0 且不超过 600 秒                                      |
+| `AGENT_MAX_STEPS`     | 智能体运行步骤上限，默认 30，可设 1–50；包含模型、工具等运行步骤，每轮记忆读取仍最多 12 次 |
 
 可以在 PyCharm 的运行配置中填写这些环境变量。根目录 `.env.example` 只说明支持的变量，后端**不会自动加载 `.env` 文件**。
 

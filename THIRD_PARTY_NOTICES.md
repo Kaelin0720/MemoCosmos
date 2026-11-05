@@ -4,6 +4,36 @@ MemoCosmos is licensed under MIT. Its dependencies retain their own licenses.
 
 The following notices cover the frontend production dependency set. The portable release contains a static interface and does not distribute native Sharp/libvips binaries. Backend dependencies are installed separately by uv with their own license files.
 
+## three 0.170.0
+
+License: MIT
+
+Upstream: https://threejs.org/
+
+```text
+The MIT License
+
+Copyright © 2010-2024 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
+
 ## tslib · 2.8.1
 
 License: 0BSD
@@ -3447,7 +3477,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## @next/env · 16.4.0
+## @next/env · 16.4.3
 
 License: MIT
 
@@ -3457,7 +3487,7 @@ Attribution: Next.js Team
 
 Refer to the upstream distribution for its license text.
 
-## @next/swc-darwin-arm64 · 16.4.0
+## @next/swc-darwin-arm64 · 16.4.3
 
 License: MIT
 
@@ -7210,7 +7240,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## next · 16.4.0
+## next · 16.4.3
 
 License: MIT
 
