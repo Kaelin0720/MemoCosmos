@@ -230,7 +230,7 @@ test("真实临时文档库：文件、目录、阅读、撞名、丢响应、�
       { encoding: "utf8" },
     );
     expect(database.status).toBe(0);
-    expect(JSON.parse(database.stdout)).toEqual(["0004_second_brain", 2, 0]);
+    expect(JSON.parse(database.stdout)).toEqual(["0006_external_turns", 2, 0]);
     expect(errors).toEqual([]);
   } finally {
     await stop();
