@@ -1,5 +1,5 @@
 {
-  "api_key": "你的deepseekkey",
+  "api_key": "你的deepseek-key",
   "base_url": "https://api.deepseek.com",
   "model": "deepseek-chat",
   "temperature": 0.2,
